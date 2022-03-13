@@ -1,0 +1,8 @@
+<h1>Index du website</h1>
+<br>
+<h3>Liste des articles</h3>
+
+{% for article in articles %}
+    <h5><a href="article/{{article.title}}">{{ article.title}}</a></h5>
+    <h5>{{ article.author}}</h5>
+{% endfor %}
