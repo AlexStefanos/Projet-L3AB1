@@ -57,8 +57,8 @@ def getTransactionInfo(TransactionHash) :
     json_data = {"jsonrpc":"2.0","method":"eth_getTransactionByHash","params": [TransactionHash],"id":1}
     resp = requests.post(url, headers=headers, json = json_data)
     json = resp.json()
-    valueInEth = int(json['result']['value'],16)*10**(-18)
-    return valueInEth
+    result = json['result']
+    return result
 
 blockNumber = getBlockNumber()
 blockNumberHex = hex(blockNumber)
@@ -74,7 +74,11 @@ print("The ETH balance of the adress " + adress + " is : " + str(getBalanceEth(a
 print("The number of transactions in the block number " + str(blockNumber) + " is : " + str(numberOfTransactions))
 tab = []
 for i in range (50) :
-    print("The transaction number " + str(i) + " named by the hash : " + InfoBlock[i] + " of the block number " + str(blockNumber) +  " has a value of " + str(getTransactionInfo(InfoBlock[i])) + " Ethereum")
+    valueInEth = int(getTransactionInfo(InfoBlock[i])['value'],16)*10**(-18)  
+    sender =  getTransactionInfo(InfoBlock[i])['from']
+    receiver = getTransactionInfo(InfoBlock[i])['to']
+    print("\n The transaction number " + str(i) + " named by the hash : " + InfoBlock[i] + " of the block number " + str(blockNumber) +  " has a value of " + str(valueInEth) + " Ethereum")
+    print("\n The sender adress is " + sender + " and the receiver adress is " + receiver)
     #tab.append(getTransactionInfo(InfoBlock[i]))
 #print(tab)
 
