@@ -1,7 +1,6 @@
-from re import U
-from django.urls import path
-from . import views
+from rest_framework import routers
 
-urlpatterns = [
-    path('get/',views.getData),
-]
+from api.views import TransactionViewSet
+
+router = routers.DefaultRouter()
+router.register('Transaction', TransactionViewSet)

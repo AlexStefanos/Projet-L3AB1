@@ -1,8 +1,9 @@
-from django import views
-from rest_framework.response import Response
-from rest_framework.decorators import api_view
+from rest_framework import viewsets
 
-@api_view(['GET'])
-def getData(request):
-    person = {'name': 'Denis', 'age':28}
-    return Response(person)
+from api.models import Transaction
+from api.serializers import TransactionSerializers
+
+class TransactionViewSet(viewsets.ModelViewSet):
+
+    queryset = Transaction.objects.all()
+    serializers_class = TransactionSerializers
