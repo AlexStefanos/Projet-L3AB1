@@ -4,7 +4,7 @@ from rest_framework import routers
 from api.urls import router as transaction
 
 router = routers.DefaultRouter()
-router.registry.extends(transaction.registry)
+# router.registry.extends(transaction.registry)
 
 urlpatterns = [
     path('admin/', admin.site.urls),

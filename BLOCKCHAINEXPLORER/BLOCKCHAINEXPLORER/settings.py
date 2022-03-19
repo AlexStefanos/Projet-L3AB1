@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'api.apps.ApiConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -77,10 +78,24 @@ WSGI_APPLICATION = 'BLOCKCHAINEXPLORER.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
+'''
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
+    }
+            'CLIENT' : {
+            'host' : 'mongodb+srv://AlexStefanos01:WGKzmuXPwn8F1O7XLI1I@blockchainexplorerclust.rjtif.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
+        }
+}
+'''
+DATABASES = {
+    'default' : {
+        'ENGINE' : 'djongo',
+        'NAME' : 'BlockchainExplorer',
+        'CLIENT' : {
+            'host' : 'mongodb+srv://AlexStefanos01:WGKzmuXPwn8F1O7XLI1I@blockchainexplorerclust.rjtif.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
+        }
     }
 }
 
