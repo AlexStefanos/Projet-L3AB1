@@ -1,0 +1,7 @@
+pip install djangorestframework
+pip install requests
+pip install djongo
+pip install pymongo==3.12.1
+sudo apt-get install npm
+npm install bootstrap
+pip instlal dnspython
