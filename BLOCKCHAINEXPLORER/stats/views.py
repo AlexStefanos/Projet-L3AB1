@@ -5,7 +5,7 @@ from .models import Article
 def website_index(request):
     articles = Article.objects.all()
     data = {'articles': articles}
-    return render(request, 'website/website_index.html', data)
+    return render(request, 'Stats/stats_index.html', data)
 
 def article(request, name):
     try:
