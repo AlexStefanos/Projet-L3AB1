@@ -1,17 +1,8 @@
 from django.shortcuts import render
-from .models import Article
 # Create your views here.
 
-def website_index(request):
-    articles = Article.objects.all()
-    data = {'articles': articles}
-    return render(request, 'Stats/stats_index.html', data)
+def stats_index(request):
+    return render(request, 'stats/stats_index.html')
 
-def article(request, name):
-    try:
-        article = Article.objects.get(title=name)
-        data = {'article': article}
-    except:
-        data = {'message': 'l\'article que vous avez demande n\'existe pas'}
-    return render(request, 'website/article.html', data)
+
 

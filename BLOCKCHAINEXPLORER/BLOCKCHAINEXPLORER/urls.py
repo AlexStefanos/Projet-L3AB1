@@ -11,5 +11,6 @@ urlpatterns = [
     path('',include('home.urls')),
     path('stats/',include('stats.urls')),
     path('api/',include(router.urls)),
+    path('documentation/', include('documentation.urls')),
     
 ]
