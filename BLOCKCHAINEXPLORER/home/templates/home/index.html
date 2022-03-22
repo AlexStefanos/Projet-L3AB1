@@ -7,15 +7,27 @@ Index
 {% endblock %}
 
 {% block body %}
-
 <div class = "container-fluid" >
     <div class = "row">
         <div class = "col">
             <h1>BlockchainExplorer</h1>
-            <p>Bienvenue</p>
         </div>
     </div>
+</div>
 
 
+<div class ="content">
+    <span class ="border">
+        <table class ="list">
+            <tr>
+                <td class = "table"> Latest Block </td>
+                <td class = "table"> Latest Transaction </td>
+            </tr>
+            <tr class = "test">
+                <td><a class = "linkAllBlock" href ="block">View All Block</a></td>
+                <td><a class = "linkAllTransactions" href ="transaction">View All Transaction</a></td>
+            </tr>
+        </table>
+    </span>
 </div>
 {% endblock %}

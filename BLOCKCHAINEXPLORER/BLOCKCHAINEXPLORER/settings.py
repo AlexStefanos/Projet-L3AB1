@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     'home.apps.HomeConfig',
     'stats.apps.StatsConfig',
     'documentation.apps.DocumentationConfig',
+    'block.apps.BlockConfig',
+    'transaction.apps.TransactionConfig',
     'rest_framework',
 ]
 
