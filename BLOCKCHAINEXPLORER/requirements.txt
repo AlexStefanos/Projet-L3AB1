@@ -4,4 +4,7 @@ pip install djongo
 pip install pymongo==3.12.1
 sudo apt-get install npm
 npm install bootstrap
-pip instlal dnspython
+pip install dnspython
+
+python3 manage.py runserver
+mongod --dbpath datas/

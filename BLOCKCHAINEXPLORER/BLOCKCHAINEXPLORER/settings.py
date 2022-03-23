@@ -85,9 +85,6 @@ DATABASES = {
     'default' : {
         'ENGINE' : 'djongo',
         'NAME' : 'BlockchainExplorer',
-        'CLIENT' : {
-            'host' : 'mongodb+srv://AlexStefanos01:WGKzmuXPwn8F1O7XLI1I@blockchainexplorerclust.rjtif.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
-        }
     }
 }
 

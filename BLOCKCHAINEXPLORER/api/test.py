@@ -8,17 +8,22 @@
 
 # print(json_data)
 
+from turtle import update
+from numpy import matrix
 import pymongo
+import json
+from io import StringIO
+import sys
 
-client = pymongo.MongoClient("mongodb+srv://AlexStefanos01:WGKzmuXPwn8F1O7XLI1I@blockchainexplorerclust.rjtif.mongodb.net/lastblockcollection?retryWrites=true&w=majority")
-
-# Database Name
-db = client["BlockchainExplorer"]
-
-# Collection Name
-col = db["LastBlockCollection"]
-
-x = col.find()
-
-for data in x:
+client = pymongo.MongoClient("mongodb://localhost:27017/")
+database = client["BlockchainExplorer"]
+collection = database["LastBlockCollection"]
+collectionComplete = collection.find()
+for data in collectionComplete:
     print(data)
+with (open('LastBlockCollection.json')) as file:
+    file_data = json.load(file)
+if(isinstance(file_data, list)):
+    collection.insert_many(file_data)
+else:
+    collection.insert_one(file_data)
