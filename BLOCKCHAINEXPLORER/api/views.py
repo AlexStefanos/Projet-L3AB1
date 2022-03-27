@@ -1,9 +1,10 @@
 from rest_framework.decorators import api_view
+from rest_framework.response import Response
 import pymongo
 
 @api_view(['GET'])
 def getExemple(request):
-    client = pymongo.MongoClient("mongodb+srv://AlexStefanos01:WGKzmuXPwn8F1O7XLI1I@blockchainexplorerclust.rjtif.mongodb.net/lastblockcollection?retryWrites=true&w=majority")
+    client = pymongo.MongoClient("mongodb://localhost:27017/")
 
     # Database Name
     db = client["BlockchainExplorer"]
