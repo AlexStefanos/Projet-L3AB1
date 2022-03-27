@@ -1,9 +1,19 @@
-from rest_framework import viewsets
+from rest_framework.decorators import api_view
+import pymongo
 
-from api.models import Transaction
-from api.serializers import TransactionSerializers
+@api_view(['GET'])
+def getExemple(request):
+    client = pymongo.MongoClient("mongodb+srv://AlexStefanos01:WGKzmuXPwn8F1O7XLI1I@blockchainexplorerclust.rjtif.mongodb.net/lastblockcollection?retryWrites=true&w=majority")
 
-class TransactionViewSet(viewsets.ModelViewSet):
+    # Database Name
+    db = client["BlockchainExplorer"]
 
-    queryset = Transaction.objects.all()
-    serializers_class = TransactionSerializers
+    # Collection Name
+    col = db["LastBlockCollection"]
+
+    x = col.find()
+
+    for data in x:
+        dict = data.copy()
+    del dict['_id']
+    return Response(dict)
