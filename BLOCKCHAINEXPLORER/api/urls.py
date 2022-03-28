@@ -2,5 +2,6 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('',views.getExemple)
+    path('getExemple',views.getExemple),
+    path('getInfoBlock/<int:pk>',views.getBlockInfo),
 ]
