@@ -1,6 +1,7 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 import pymongo
+from . import stats
 
 @api_view(['GET'])
 def getExemple(request):
@@ -33,3 +34,24 @@ def getBlockInfo(request,pk=None):
             dict = data.copy()
         del dict['_id']
         return Response(dict)
+
+@api_view(['GET'])
+def getFromTo(request,pk=None):
+    transaction = pk
+    if transaction is not None:
+        dict = stats.getTransactionFromTo(transaction)
+        return Response(dict)
+
+@api_view(['GET'])
+def getWallet(request,pk=None):
+    adress = pk
+    if adress is not None:
+        dict = stats.getBalanceEth(adress)
+        return Response(dict)
+
+@api_view(['GET'])
+def getEthPrice(request):
+    dict = stats.getEthPrice()
+    return Response(dict)
+        
+
