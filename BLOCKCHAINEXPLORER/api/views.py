@@ -4,7 +4,7 @@ import pymongo
 from . import stats
 
 @api_view(['GET'])
-def getExemple(request):
+def getLastBlock(request):
     client = pymongo.MongoClient("mongodb://localhost:27017/")
 
     # Database Name
@@ -29,6 +29,21 @@ def getBlockInfo(request,pk=None):
         col = db["LastBlockCollection"]
     
         y = col.find({"NumberLastBlock": str(NumberLastBlock)})
+
+        for data in y:
+            dict = data.copy()
+        del dict['_id']
+        return Response(dict)
+
+@api_view(['GET'])
+def getInfoHashBlock(request,pk=None):
+    NumberBlock = pk
+    if NumberBlock is not None:
+        client = pymongo.MongoClient("mongodb://localhost:27017/")
+        db = client["BlockchainExplorer"]
+        col = db["InfoHashBlock"]
+    
+        y = col.find({"NumberBlock": str(NumberBlock)})
 
         for data in y:
             dict = data.copy()
