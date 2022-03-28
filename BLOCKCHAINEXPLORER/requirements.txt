@@ -9,3 +9,7 @@ pip install dnspython
 python3 manage.py runserver
 mongod --dbpath datas/
 
+pip install django-rest-swagger
+pip install pyyaml
+pip install uritemplate
+
