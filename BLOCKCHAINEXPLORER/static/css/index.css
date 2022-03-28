@@ -5,16 +5,30 @@ body{
 table {
   table-layout: fixed;
   width: 100%;
-  border-collapse: collapse;
-  border: solid;
-  border-width: 1px;
+
 }
 
+.container-fluid {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.gasPrice {
+  padding-right: 100px;
+  padding-top: 20px;
+}
 
 .content{
-  margin-left: 30px;
-  margin-right: 30px;
+  margin-left: 13%;
+  margin-right: 13%;
+  border-collapse: collapse;
+  border: dotted;
+  border-width: 1px;
+  border-color: gray;
 }
+
+
 
 
 thead th:nth-child(1) {

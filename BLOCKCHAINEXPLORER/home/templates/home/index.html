@@ -8,10 +8,12 @@ Index
 
 {% block body %}
 <div class = "container-fluid" >
-    <div class = "row">
-        <div class = "col" id = "tamere">
-            <h1 onClick ="search()">BlockchainExplorer</h1>
-        </div>
+    <div class = "col">
+        <h1 onClick ="search()">BlockchainExplorer</h1>
+    </div>
+    <div class = "gasPrice">
+        <h6> Gas Price (Gwei): </h6>
+        <h6 id = "gasPrice"> </h6>
     </div>
 </div>
 
@@ -20,12 +22,12 @@ Index
     <span class ="border">
         <table class ="list" id = "tamere">
             <tr>
-                <th class = "table"> Latest Block </th>
+                <th class = "table" id ="block"> Latest Block </th>
                 <th class = "table"> Latest Transaction </th>
                 
             </tr>
             <tr class = "test">
-                <td><a class = "linkAllBlock" href ="block">View All Block</a></td>
+                <td><a class = "linkAllBlock" id ="block" href ="block">View All Block</a></td>
                 <td><a class = "linkAllTransactions" href ="transaction">View All Transaction</a></td>
             </tr>
         </table>
