@@ -62,7 +62,7 @@ ROOT_URLCONF = 'BLOCKCHAINEXPLORER.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'documentation/templates/documentation')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

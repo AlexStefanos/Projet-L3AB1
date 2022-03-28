@@ -8,3 +8,4 @@ pip install dnspython
 
 python3 manage.py runserver
 mongod --dbpath datas/
+
