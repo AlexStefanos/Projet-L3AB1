@@ -1,4 +1,5 @@
 import urllib.parse
+
 import requests
 import json
 import threading
@@ -83,19 +84,19 @@ tabJsonEndHash = []
 
 def f1():
     for i in range(0,int(numberOfTransactions/3)) :
-        tabJsonBeginningValue.append(getTransactionInfo(InfoBlock[i],url))
+        #tabJsonBeginningValue.append(getTransactionInfo(InfoBlock[i],url))
         tabJsonBeginningHash.append(InfoBlock[i])
         
  
 def f2():
     for i in range(int(numberOfTransactions/3),int(2*numberOfTransactions/3)) :
-        tabJsonMiddleValue.append(getTransactionInfo(InfoBlock[i],url2))
+        #tabJsonMiddleValue.append(getTransactionInfo(InfoBlock[i],url2))
         tabJsonMiddleHash.append(InfoBlock[i])
 
 
 def f3():
     for i in range(int(2*numberOfTransactions/3),numberOfTransactions) :
-        tabJsonEndValue.append(getTransactionInfo(InfoBlock[i],url3))
+        #tabJsonEndValue.append(getTransactionInfo(InfoBlock[i],url3))
         tabJsonEndHash.append(InfoBlock[i])
  
 
@@ -115,19 +116,21 @@ fin = time.time()
 
 print(fin-debut)
 
-tabJsonBeginningValue.extend(tabJsonMiddleValue)
-tabJsonBeginningValue.extend(tabJsonEndValue)
+#tabJsonBeginningValue.extend(tabJsonMiddleValue)
+#tabJsonBeginningValue.extend(tabJsonEndValue)
 
 tabJsonBeginningHash.extend(tabJsonMiddleHash)
 tabJsonBeginningHash.extend(tabJsonEndHash)
 
 jsonString = {"NumberLastBlock" : str(blockNumber), 
             "GasPrice(Gwei)" : str(getGasPrice()), 
-            "NbTransactions" : str(numberOfTransactions) , 
-            "AllTransactionsHash" : str(tabJsonBeginningHash) , 
-            "ValueOfEachTransaction" : str(tabJsonBeginningValue)}
+            "NbTransactions" : str(numberOfTransactions)}
 # Json = json.dumps(jsonString)
 # print(Json)
+
+jsonStringHash = {"NumberBlock" : str(blockNumber), 
+                "AllTransactionsHash" : str(tabJsonBeginningHash)}
+
 
 import pymongo
 
@@ -137,6 +140,19 @@ collection = database["LastBlockCollection"]
 collectionComplete = collection.find()
 with(open('data.json', 'w')) as file:
     json.dump(jsonString, file)
+with(open('data.json', 'r')) as file:
+    file_data = json.load(file)
+if(isinstance(file_data, list)):
+    collection.insert_many(file_data)
+else:
+    collection.insert_one(file_data)
+
+client = pymongo.MongoClient("mongodb://localhost:27017/")
+database = client["BlockchainExplorer"]
+collection = database["InfoHashBlock"]
+collectionComplete = collection.find()
+with(open('data.json', 'w')) as file:
+    json.dump(jsonStringHash, file)
 with(open('data.json', 'r')) as file:
     file_data = json.load(file)
 if(isinstance(file_data, list)):
