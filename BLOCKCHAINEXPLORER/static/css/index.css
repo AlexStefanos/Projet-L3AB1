@@ -23,12 +23,21 @@ table {
   margin-left: 13%;
   margin-right: 13%;
   border-collapse: collapse;
-  border: dotted;
+  border: solid;
   border-width: 1px;
   border-color: gray;
+  border-radius: 5px;
+
 }
 
-
+#transaction{
+  border-left: dotted;
+  border-bottom: 0cm;
+  border-top: 0cm;
+  border-right: 0cm;
+  border-width: 1px;
+  border-color: rgb(56, 56, 56);
+}
 
 
 thead th:nth-child(1) {
@@ -47,8 +56,8 @@ thead th:nth-child(4) {
   width: 35%;
 }
 
-th, td {
-  padding: 20px;
+th , td{
+  padding: 10px;
 }
 
 
