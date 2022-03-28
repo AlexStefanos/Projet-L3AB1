@@ -8,12 +8,18 @@ from requests.structures import CaseInsensitiveDict
 import requests
 import time
 import datetime
+import matplotlib.pyplot as plt
+import math
 
 
 
 url = "https://api.zmok.io/mainnet/lcf0jmfdvhdi3ezt"
 url2 = "https://api.zmok.io/mainnet/uoeoajazlmlsvslh"
 url3 = "https://api.zmok.io/mainnet/swmxlmavvfhtdeyl"
+apiKey = "11d0e28c6c04190b58fd6abf1f1ad55792e34e93e61c784e5b33c836efb17f1a"
+apiKeyEthScan = "BC9GC2BCWXHFF4BPZYGY6RV5JED5HGB72A"
+urlPrix = "https://min-api.cryptocompare.com/data/price?fsym=ETH&tsyms=USD&apikey=" + apiKey
+urlHisto = "https://min-api.cryptocompare.com/data/v2/histoday?fsym=ETH&tsym=USD&limit=14&apikey=" + apiKey
 headers = CaseInsensitiveDict()
 headers["Content-Type"] = "application/json"
 adress = "0x9c5083dd4838e120dbeac44c052179692aa5dac5"
@@ -83,6 +89,36 @@ def getTransactionFromTo(TransactionHash) :
     json = resp.json()
     FromTo = {"from" : json['result']['from'], "to" : json['result']['to']}
     return (FromTo)
+
+def getPriceEth() :
+    responsePrix = requests.post(urlPrix).json()
+    return responsePrix
+
+def drawEthChart() :
+    responseHisto = requests.post(urlHisto).json()
+    tabPrix = []
+    for i in range (14) :
+        tabPrix.append(responseHisto['Data']['Data'][i]['open'])
+    return tabPrix
+
+def getAllTransactionAdress(Adress) :
+    urlInfo = "https://api.etherscan.io/api?module=account&action=txlist&address=" + Adress + "&startblock=0&endblock=99999999&page=1&offset=1000&sort=asc&apikey=" + apiKeyEthScan
+    responseInfo = requests.post(urlInfo).json()
+    tabInfoWallet = []
+    tailleTableau = len(responseInfo['result'])
+    for i in range (tailleTableau) :
+        tabInfoWallet.append(responseInfo['result'][i]['hash'])
+    AllTransactionsWallet = {"AllTransactions" : tabInfoWallet}
+    return (AllTransactionsWallet)
+
+
+
+"""plt.plot(drawEthChart())
+plt.ylabel('ETH Price')
+plt.show() 
+Enlever les guillemets pour tracer la courbe de l'ETH sur 14 jours"""
+# print(getPriceEth()) renvoie le prix de l'ETH
+# print(getAllTransactionAdress(Adress)) renvoie sous un dictionnaire l'ensemble des Hash des transactions d'une adresse 
 
 blockNumber = getBlockNumber()
 blockNumberHex = hex(blockNumber)
