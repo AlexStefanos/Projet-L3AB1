@@ -205,7 +205,9 @@ jsonString = {"NumberLastBlock" : str(blockNumber),
 # print(Json)
 
 jsonStringHash = {"NumberBlock" : str(blockNumber), 
+                "NumberTransactionsInBlock" : str(numberOfTransactions),
                 "AllTransactionsHash" : str(tabJsonBeginningHash)}
+                
 
 
 import pymongo
