@@ -1,5 +1,4 @@
 import urllib.parse
-
 import requests
 import json
 import threading
@@ -10,12 +9,16 @@ import time
 import datetime
 import matplotlib.pyplot as plt
 import math
+import seaborn as sns
+import matplotlib.ticker
 
+sns.set()
 
 
 url = "https://api.zmok.io/mainnet/lcf0jmfdvhdi3ezt"
 url2 = "https://api.zmok.io/mainnet/uoeoajazlmlsvslh"
 url3 = "https://api.zmok.io/mainnet/swmxlmavvfhtdeyl"
+urlHistoryTxCnt = "http://www.tokenview.com:8088/chart/eth/daily_tx_cnt"
 apiKey = "11d0e28c6c04190b58fd6abf1f1ad55792e34e93e61c784e5b33c836efb17f1a"
 apiKeyEthScan = "BC9GC2BCWXHFF4BPZYGY6RV5JED5HGB72A"
 urlPrix = "https://min-api.cryptocompare.com/data/price?fsym=ETH&tsyms=USD&apikey=" + apiKey
@@ -111,7 +114,25 @@ def getAllTransactionAdress(Adress) :
     AllTransactionsWallet = {"AllTransactions" : tabInfoWallet}
     return (AllTransactionsWallet)
 
+def drawDailyTransactions() :
+    response = requests.request("GET", urlHistoryTxCnt)
+    responseJson = response.json()
+    data = responseJson["data"]
+    len = len(data)
+    tabTransactions = []
+    for i in range(len-15,len-1):
+        for cle,valeur in data[i].items() :
+            tabTransactions.append((cle,valeur))
+    x = []
+    y = []
+    for i in range (14) :
+        x.append(tabTransactions[i][0])
+        y.append(tabTransactions[i][1])
 
+    fig, ax = plt.subplots()
+    ax.get_yaxis().set_major_formatter(matplotlib.ticker.FuncFormatter(lambda x, p: format(int(x), ',')))
+    ax.plot(x,y)
+    plt.show()
 
 """plt.plot(drawEthChart())
 plt.ylabel('ETH Price')
