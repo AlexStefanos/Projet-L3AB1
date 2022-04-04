@@ -18,4 +18,19 @@ def drawEthChart() :
         epoch_time = responseHisto['Data']['Data'][i]['time']
         x.append(time.strftime('%Y-%m-%d', time.localtime(epoch_time)))
     return [x,y]
-    
+
+def drawtransactionsChart() : 
+    response = requests.request("GET", urlHistoryTxCnt)
+    responseJson = response.json()
+    data = responseJson["data"]
+    tabTransactions = []
+    for i in range(len(data)-15,len(data)-1):
+        for cle,valeur in data[i].items() :
+            tabTransactions.append((cle,valeur))
+    x = []
+    y = []
+    for i in range (14) :
+        x.append(tabTransactions[i][0])
+        y.append(tabTransactions[i][1])
+
+    return [x,y]

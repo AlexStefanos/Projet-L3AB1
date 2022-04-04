@@ -15,5 +15,10 @@ def stats_index(request):
                         mode='lines', name='14D ETH CHART',
                         opacity=0.8, marker_color='green')],
                output_type='div')
-    return render(request, 'stats/stats_index.html', context={'plot_div': plot_div})
-
+    x_data2 = draw.drawtransactionsChart()[0]
+    y_data2 = draw.drawtransactionsChart()[1]
+    plot_tx = plot([Scatter(x=x_data2, y=y_data2,
+                        mode='lines', name='14D TX CHART',
+                        opacity=0.8, marker_color='green')],
+               output_type='div')
+    return render(request, 'stats/stats_index.html', context={'plot_div': plot_div,'plot_tx' : plot_tx})

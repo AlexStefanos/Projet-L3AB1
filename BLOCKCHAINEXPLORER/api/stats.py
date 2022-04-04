@@ -151,7 +151,7 @@ print("The actual gas price is : " + str(getGasPrice()) + " Gwei")
 print("The ETH balance of the adress " + adress + " is : " + str(getBalanceEth(adress)))
 print("The number of transactions in the block number " + str(blockNumber) + " is : " + str(numberOfTransactions))
 
-tabJsonBeginningValue = []
+"""tabJsonBeginningValue = []
 tabJsonMiddleValue = []
 tabJsonEndValue = []
 tabJsonBeginningHash = []
@@ -193,47 +193,60 @@ fin = time.time()
 print(fin-debut)
 
 #tabJsonBeginningValue.extend(tabJsonMiddleValue)
-#tabJsonBeginningValue.extend(tabJsonEndValue)
+#tabJsonBeginningValue.extend(tabJsonEndValue)"""
 
-tabJsonBeginningHash.extend(tabJsonMiddleHash)
+"""tabJsonBeginningHash.extend(tabJsonMiddleHash)
 tabJsonBeginningHash.extend(tabJsonEndHash)
 
 jsonString = {"NumberLastBlock" : str(blockNumber), 
             "GasPrice(Gwei)" : str(getGasPrice()), 
-            "NbTransactions" : str(numberOfTransactions)}
+            "NbTransactions" : str(numberOfTransactions)}"""
 # Json = json.dumps(jsonString)
 # print(Json)
 
-jsonStringHash = {"NumberBlock" : str(blockNumber), 
+"""jsonStringHash = {"NumberBlock" : str(blockNumber), 
                 "NumberTransactionsInBlock" : str(numberOfTransactions),
-                "AllTransactionsHash" : str(tabJsonBeginningHash)}
+                "AllTransactionsHash" : str(tabJsonBeginningHash)}"""
                 
 
 
 import pymongo
 
-client = pymongo.MongoClient("mongodb://localhost:27017/")
-database = client["BlockchainExplorer"]
-collection = database["LastBlockCollection"]
-collectionComplete = collection.find()
-with(open('data.json', 'w')) as file:
-    json.dump(jsonString, file)
-with(open('data.json', 'r')) as file:
-    file_data = json.load(file)
-if(isinstance(file_data, list)):
-    collection.insert_many(file_data)
-else:
-    collection.insert_one(file_data)
 
-client = pymongo.MongoClient("mongodb://localhost:27017/")
-database = client["BlockchainExplorer"]
-collection = database["InfoHashBlock"]
-collectionComplete = collection.find()
-with(open('data.json', 'w')) as file:
-    json.dump(jsonStringHash, file)
-with(open('data.json', 'r')) as file:
-    file_data = json.load(file)
-if(isinstance(file_data, list)):
-    collection.insert_many(file_data)
-else:
-    collection.insert_one(file_data)
+for i in range(15) :
+    txCount = getTransactionCount(hex(blockNumber-i))
+    jsonString = {"NumberLastBlock" : str(blockNumber-i), 
+            "GasPrice(Gwei)" : str(getGasPrice()), 
+            "NbTransactions" : str(txCount)}
+    client = pymongo.MongoClient("mongodb://localhost:27017/")
+    database = client["BlockchainExplorer"]
+    collection = database["LastBlockCollection"]
+    collectionComplete = collection.find()
+    with(open('data.json', 'w')) as file:
+        json.dump(jsonString, file)
+    with(open('data.json', 'r')) as file:
+        file_data = json.load(file)
+    if(isinstance(file_data, list)):
+        collection.insert_many(file_data)
+    else:
+        collection.insert_one(file_data)
+    
+    InfoBlock = getBlock(hex(blockNumber-i))
+    tabJsonHash = []
+    for i in range(getTransactionCount(hex(blockNumber-i))) :
+        tabJsonHash.append(InfoBlock[i])
+    jsonStringHash = {"NumberBlock" : str(blockNumber-i), 
+                "NumberTransactionsInBlock" : str(txCount),
+                "AllTransactionsHash" : str(tabJsonHash)}
+    client = pymongo.MongoClient("mongodb://localhost:27017/")
+    database = client["BlockchainExplorer"]
+    collection = database["InfoHashBlock"]
+    collectionComplete = collection.find()
+    with(open('data.json', 'w')) as file:
+        json.dump(jsonStringHash, file)
+    with(open('data.json', 'r')) as file:
+        file_data = json.load(file)
+    if(isinstance(file_data, list)):
+        collection.insert_many(file_data)
+    else:
+        collection.insert_one(file_data)
