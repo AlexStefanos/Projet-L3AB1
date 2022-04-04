@@ -12,4 +12,5 @@ urlpatterns = [
    path('stats/',include('stats.urls')),
    path('api/',include('api.urls')),
    path('documentation/', include('documentation.urls')),
+   path('tx/<str:pk>', include('tx.urls')),
 ]

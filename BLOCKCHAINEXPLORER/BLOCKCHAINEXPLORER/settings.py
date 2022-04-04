@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'block.apps.BlockConfig',
     'transaction.apps.TransactionConfig',
     'rest_framework',
+    'tx.apps.TxConfig',
 ]
 
 MIDDLEWARE = [
