@@ -21,6 +21,12 @@ request.onload = ()=>{
         var exemple = JSON.parse(request.response);
         document.getElementById("gasPrice").innerHTML = exemple['GasPrice(Gwei)'];
         LastBlock = exemple['NumberLastBlock'].toString();
+        var b = parseInt(LastBlock);
+
+        for(let i = 1; i < 16; i++){
+            document.getElementById("block".concat(i)).innerHTML = b;
+            b = b - 1;
+        }
         
         const request2 = new XMLHttpRequest();
         request2.open("GET", "http://127.0.0.1:8000/api/getInfoHashBlock/".concat(LastBlock));
