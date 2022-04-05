@@ -1,4 +1,5 @@
 import urllib.parse
+import pymongo
 import requests
 import json
 import threading
@@ -141,15 +142,20 @@ Enlever les guillemets pour tracer la courbe de l'ETH sur 14 jours"""
 # print(getPriceEth()) renvoie le prix de l'ETH
 # print(getAllTransactionAdress(Adress)) renvoie sous un dictionnaire l'ensemble des Hash des transactions d'une adresse 
 
-blockNumber = getBlockNumber()
+"""blockNumber = getBlockNumber()
 blockNumberHex = hex(blockNumber)
 numberOfTransactions = getTransactionCount(blockNumberHex)
-InfoBlock = getBlock(blockNumberHex)
+InfoBlock = getBlock(blockNumberHex)"""
+
+
+blockNumber = getBlockNumber()
+blockNumberHex = hex(blockNumber)
 
 print("The number of the last block is : " + str(blockNumber))
-print("The actual gas price is : " + str(getGasPrice()) + " Gwei") 
+"""print("The actual gas price is : " + str(getGasPrice()) + " Gwei") 
 print("The ETH balance of the adress " + adress + " is : " + str(getBalanceEth(adress)))
-print("The number of transactions in the block number " + str(blockNumber) + " is : " + str(numberOfTransactions))
+print("The number of transactions in the block number " + str(blockNumber) + " is : " + str(numberOfTransactions))"""
+
 
 """tabJsonBeginningValue = []
 tabJsonMiddleValue = []
@@ -210,13 +216,12 @@ jsonString = {"NumberLastBlock" : str(blockNumber),
                 
 
 
-import pymongo
 
-
-for i in range(15) :
+for i in range(15,-1,-1) :
+    gasPrice = getGasPrice()
     txCount = getTransactionCount(hex(blockNumber-i))
     jsonString = {"NumberLastBlock" : str(blockNumber-i), 
-            "GasPrice(Gwei)" : str(getGasPrice()), 
+            "GasPrice(Gwei)" : str(gasPrice), 
             "NbTransactions" : str(txCount)}
     client = pymongo.MongoClient("mongodb://localhost:27017/")
     database = client["BlockchainExplorer"]
@@ -232,12 +237,9 @@ for i in range(15) :
         collection.insert_one(file_data)
     
     InfoBlock = getBlock(hex(blockNumber-i))
-    tabJsonHash = []
-    for i in range(getTransactionCount(hex(blockNumber-i))) :
-        tabJsonHash.append(InfoBlock[i])
     jsonStringHash = {"NumberBlock" : str(blockNumber-i), 
                 "NumberTransactionsInBlock" : str(txCount),
-                "AllTransactionsHash" : str(tabJsonHash)}
+                "AllTransactionsHash" : str(InfoBlock)}
     client = pymongo.MongoClient("mongodb://localhost:27017/")
     database = client["BlockchainExplorer"]
     collection = database["InfoHashBlock"]
