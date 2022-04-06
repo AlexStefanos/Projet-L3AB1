@@ -13,4 +13,7 @@ urlpatterns = [
    path('api/',include('api.urls')),
    path('documentation/', include('documentation.urls')),
    path('tx/<str:pk>', include('tx.urls')),
+   path('adress/<str:pk>', include('adress.urls')),
+   #path('adress/', include('adress.urls')),
+
 ]

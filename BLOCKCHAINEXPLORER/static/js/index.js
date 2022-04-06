@@ -8,6 +8,11 @@ function search(){
     window.location.href = 'http://127.0.0.1:8000/tx/'.concat(text.value);
 }
 
+function changeColor(){
+    document.getElementsByClassName("bottonPage").style.background = "blue";
+}
+
+
 function link(numberTransac){
     var text = document.getElementById('transaction'.concat(numberTransac)).textContent;
     document.getElementById('transaction'.concat(numberTransac)).setAttribute("href", "tx/".concat(text));

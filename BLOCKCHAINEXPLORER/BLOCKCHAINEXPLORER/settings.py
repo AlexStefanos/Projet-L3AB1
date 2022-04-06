@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'transaction.apps.TransactionConfig',
     'rest_framework',
     'tx.apps.TxConfig',
+    'adress.apps.AdressConfig',
 ]
 
 MIDDLEWARE = [

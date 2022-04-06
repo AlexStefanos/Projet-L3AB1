@@ -16,6 +16,15 @@ table {
 
 }
 
+.bottomPage{
+  border-radius: 10px;
+  margin-top: 5%;
+  margin-left: 13%;
+  margin-right: 13%;
+  background-color: white;
+  text-align: center; 
+}
+
 a{
   font-size: 12px;
 }
@@ -33,14 +42,15 @@ a{
 
 
 .content{
-  background-color: white;
+  text-align: center;
+  background: white;
   margin-left: 13%;
   margin-right: 13%;
   border-collapse: collapse;
   border: solid;
   border-width: 1px;
   border-color: gray;
-  border-radius: 5px;
+  border-radius: 10px;
 
 }
 
