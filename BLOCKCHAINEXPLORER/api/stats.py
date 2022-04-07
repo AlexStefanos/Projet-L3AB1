@@ -98,13 +98,6 @@ def getPriceEth() :
     responsePrix = requests.post(urlPrix).json()
     return responsePrix
 
-def drawEthChart() :
-    responseHisto = requests.post(urlHisto).json()
-    tabPrix = []
-    for i in range (14) :
-        tabPrix.append(responseHisto['Data']['Data'][i]['open'])
-    return tabPrix
-
 def getAllTransactionAdress(Adress) :
     urlInfo = "https://api.etherscan.io/api?module=account&action=txlist&address=" + Adress + "&startblock=0&endblock=99999999&page=1&offset=1000&sort=asc&apikey=" + apiKeyEthScan
     responseInfo = requests.post(urlInfo).json()
@@ -115,25 +108,6 @@ def getAllTransactionAdress(Adress) :
     AllTransactionsWallet = {"AllTransactions" : tabInfoWallet}
     return (AllTransactionsWallet)
 
-def drawDailyTransactions() :
-    response = requests.request("GET", urlHistoryTxCnt)
-    responseJson = response.json()
-    data = responseJson["data"]
-    len = len(data)
-    tabTransactions = []
-    for i in range(len-15,len-1):
-        for cle,valeur in data[i].items() :
-            tabTransactions.append((cle,valeur))
-    x = []
-    y = []
-    for i in range (14) :
-        x.append(tabTransactions[i][0])
-        y.append(tabTransactions[i][1])
-
-    fig, ax = plt.subplots()
-    ax.get_yaxis().set_major_formatter(matplotlib.ticker.FuncFormatter(lambda x, p: format(int(x), ',')))
-    ax.plot(x,y)
-    plt.show()
 
 """plt.plot(drawEthChart())
 plt.ylabel('ETH Price')
@@ -216,15 +190,61 @@ jsonString = {"NumberLastBlock" : str(blockNumber),
                 
 
 
+def drawEthChart() :
+    responseHisto = requests.post(urlHisto).json()
+    x = []
+    y = []
+    for i in range (14) :
+        y.append(responseHisto['Data']['Data'][i]['open'])
+        epoch_time = responseHisto['Data']['Data'][i]['time']
+        x.append(time.strftime('%Y-%m-%d', time.localtime(epoch_time)))
+    return [x,y]
+
+def drawTransactionsChart() : 
+    response = requests.request("GET", urlHistoryTxCnt)
+    responseJson = response.json()
+    data = responseJson["data"]
+    tabTransactions = []
+    for i in range(len(data)-15,len(data)-1):
+        for cle,valeur in data[i].items() :
+            tabTransactions.append((cle,valeur))
+    x = []
+    y = []
+    for i in range (14) :
+        x.append(tabTransactions[i][0])
+        y.append(tabTransactions[i][1])
+
+    return [x,y]
+
+
+client = pymongo.MongoClient("mongodb://localhost:27017/")
+database = client["BlockchainExplorer"]
+(x_data_EthChart,y_data_EthChart) = drawEthChart()
+(x_data_EthTxCt,y_data_EthTxCt) = drawTransactionsChart()
+
+gasPrice = getGasPrice()
+
+jsonString = {"x_data_EthPrice" : x_data_EthChart, 
+            "y_data_EthPrice" : y_data_EthChart,
+            "x_data_EthTxCt" : x_data_EthTxCt,
+            "y_data_EthTxCt" : y_data_EthTxCt}
+
+collection = database["DrawChartsCollection"]
+collectionComplete = collection.find()
+with(open('data.json', 'w')) as file:
+    json.dump(jsonString, file)
+with(open('data.json', 'r')) as file:
+    file_data = json.load(file)
+if(isinstance(file_data, list)):
+    collection.insert_many(file_data)
+else:
+    collection.insert_one(file_data)
 
 for i in range(15,-1,-1) :
-    gasPrice = getGasPrice()
     txCount = getTransactionCount(hex(blockNumber-i))
     jsonString = {"NumberLastBlock" : str(blockNumber-i), 
             "GasPrice(Gwei)" : str(gasPrice), 
             "NbTransactions" : str(txCount)}
-    client = pymongo.MongoClient("mongodb://localhost:27017/")
-    database = client["BlockchainExplorer"]
     collection = database["LastBlockCollection"]
     collectionComplete = collection.find()
     with(open('data.json', 'w')) as file:
@@ -240,8 +260,6 @@ for i in range(15,-1,-1) :
     jsonStringHash = {"NumberBlock" : str(blockNumber-i), 
                 "NumberTransactionsInBlock" : str(txCount),
                 "AllTransactionsHash" : str(InfoBlock)}
-    client = pymongo.MongoClient("mongodb://localhost:27017/")
-    database = client["BlockchainExplorer"]
     collection = database["InfoHashBlock"]
     collectionComplete = collection.find()
     with(open('data.json', 'w')) as file:

@@ -2,6 +2,7 @@ from django.shortcuts import render
 from plotly.offline import plot
 from plotly.graph_objs import Scatter
 from stats import draw
+import pymongo
 
 # Create your views here.
 
@@ -9,15 +10,28 @@ from stats import draw
     return render(request, 'stats/stats_index.html')"""
 
 def stats_index(request):
-    x_data = draw.drawEthChart()[0]
-    y_data = draw.drawEthChart()[1]
-    plot_div = plot([Scatter(x=x_data, y=y_data,
+    client = pymongo.MongoClient("mongodb://localhost:27017/")
+
+    # Database Name
+    db = client["BlockchainExplorer"]
+
+    # Collection Name
+    col = db["DrawChartsCollection"]
+
+    x = col.find()
+
+    for data in x:
+        dict = data.copy()
+    del dict['_id']
+    x_data_EthPrice = dict['x_data_EthPrice']
+    y_data_EthPrice = dict['y_data_EthPrice']
+    plot_div = plot([Scatter(x=x_data_EthPrice, y=y_data_EthPrice,
                         mode='lines', name='14D ETH CHART',
                         opacity=0.8, marker_color='green')],
                output_type='div')
-    x_data2 = draw.drawtransactionsChart()[0]
-    y_data2 = draw.drawtransactionsChart()[1]
-    plot_tx = plot([Scatter(x=x_data2, y=y_data2,
+    x_data_DailyTx = dict['x_data_EthTxCt']
+    y_data_DailyTx = dict['y_data_EthTxCt']
+    plot_tx = plot([Scatter(x=x_data_DailyTx, y= y_data_DailyTx,
                         mode='lines', name='14D TX CHART',
                         opacity=0.8, marker_color='green')],
                output_type='div')
