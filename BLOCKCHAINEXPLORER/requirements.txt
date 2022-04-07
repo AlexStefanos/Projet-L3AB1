@@ -13,4 +13,7 @@ mongod --dbpath datas/
 pip install django-rest-swagger
 pip install pyyaml
 pip install uritemplate
+pip install stats
+pip install plotly
+
 

@@ -1,7 +1,6 @@
 from django.shortcuts import render
 from plotly.offline import plot
 from plotly.graph_objs import Scatter
-from stats import draw
 import pymongo
 
 # Create your views here.
