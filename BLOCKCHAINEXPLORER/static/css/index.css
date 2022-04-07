@@ -25,24 +25,44 @@ th{
 }
 
 .content{
-  margin-bottom: 2%;
-}
+  margin-left: 2%;
+  margin-right: 2%;
+  margin-top: 2%;
+  padding-top: 2%;
+  padding-bottom: 2%;
+  border: 1px solid gray;
+  border-radius : 5px;
+  background-color: white;
+  }
 
 .etherPrice{
-  font-family: 'Courier New', Courier, monospace;
-  border-radius: 5px;
   width: 300px;
-  text-align:right;
-  padding-top: 20px;
+  text-align: left;
+  height: 50%;
+  margin-left: 5%;
+  display: inline-block;
+  border-right: 1px solid gray;
 }
 
 .gasPrice{
-  font-family: 'Courier New', Courier, monospace;
-  border-radius: 5px;
   width: 300px;
-  text-align:right;
-  padding-top: 20px;
+  height: 50%;
+  margin-left: 5%;
+  text-align:left;
+  display: inline-block;
+  border-right: 1px solid gray;
 }
+
+.nbTransac14{
+  width: 350px;
+  margin-left: 5%;
+  display: inline-block;
+}
+
+#title{
+  text-decoration: underline 1px solid gray;
+}
+
 
 
 .mainContent{
@@ -50,12 +70,12 @@ th{
   height: 800px;  
   background: white;
   border-collapse: collapse;
+  padding-top: 2%;
 }
 
 
 /* Nouveau css */
 .TransactionContent{
-  padding: 10px;
   border: 2px solid black;
   border-radius: 5px;
   float: right;
@@ -66,7 +86,6 @@ th{
 }
 
 .BlockContent{
-  padding: 10px;
   border: 2px solid black;
   border-radius: 5px;
   width :38% ;
