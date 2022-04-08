@@ -227,7 +227,21 @@ def drawTopAdressChart() :
         x.append(Json['data'][i]["addr"])
     return [x,y]
     
+def drawPieTopCrypto() :
+    url = "https://api.coingecko.com/api/v3/global"
+    response = requests.request('GET', url)
+    json = response.json()
+    percentage = 0
+    tabNomCrypto = []
+    tabValeur = []
+    for cle,valeur in json['data']["market_cap_percentage"].items() :
+        percentage += valeur
+        tabNomCrypto.append(cle)
+        tabValeur.append(valeur)
 
+    tabValeur.append(100-percentage)
+    tabNomCrypto.append('others')
+    return[tabValeur,tabNomCrypto]
 
 client = pymongo.MongoClient("mongodb://localhost:27017/")
 database = client["BlockchainExplorer"]
@@ -240,13 +254,11 @@ for data in x:
 del dict['_id']
 
 if (drawEthChart() != [dict['x_data_EthPrice'],dict['y_data_EthPrice']]) :
-    print(drawEthChart())
-    print((dict['x_data_EthPrice'],dict['y_data_EthPrice']))
 
     (x_data_EthChart,y_data_EthChart) = drawEthChart()
     (x_data_EthTxCt,y_data_EthTxCt) = drawTransactionsChart()
     (x_data_TopWallet,y_data_TopWallet) = drawTopAdressChart()
-
+    (x_data_PieMC,y_data_PieMc) = drawPieTopCrypto()
 
 
     jsonString = {"x_data_EthPrice" : x_data_EthChart, 
@@ -254,7 +266,9 @@ if (drawEthChart() != [dict['x_data_EthPrice'],dict['y_data_EthPrice']]) :
             "x_data_EthTxCt" : x_data_EthTxCt,
             "y_data_EthTxCt" : y_data_EthTxCt,
             "x_data_TopWallet" : x_data_TopWallet,
-            "y_data_TopWallet" : y_data_TopWallet}
+            "y_data_TopWallet" : y_data_TopWallet,
+            "x_data_PieMc" : x_data_PieMC,
+            "y_data_PieMc" : y_data_PieMc}
 
     collection = database["DrawChartsCollection"]
     collectionComplete = collection.find()

@@ -39,11 +39,20 @@ def stats_index(request):
     x_data_DailyTx = dict['x_data_EthTxCt']
     y_data_DailyTx = dict['y_data_EthTxCt']
     fig = px.line(df, x=x_data_DailyTx, y= y_data_DailyTx, title = "ETHEREUM TRANSACTION HISTORY IN 14 DAYS")
-    plot_tx = plot(fig,output_type='div')
+    plot_tx = plot(fig,output_type = 'div')
     
     x_data_TopWallet = dict['x_data_TopWallet']
     y_data_TopWallet = dict['y_data_TopWallet']
     fig = px.histogram(df, x=x_data_TopWallet,y=y_data_TopWallet,title = "TOP 10 RICHEST ADDRESS IN ETHEREUM")
-    plot_TopWallet = plot(fig,output_type='div')
+    plot_TopWallet = plot(fig,output_type = 'div')
+
+    x_data_PieMc = dict['x_data_PieMc']
+    y_data_PieMc = dict['y_data_PieMc']
+    fig = px.pie(df,values=x_data_PieMc, names=y_data_PieMc)
+    plot_PieMc = plot(fig,output_type = 'div')
     
-    return render(request, 'stats/stats_index.html', context={'plot_div': plot_div,'plot_tx' : plot_tx,'plot_TopWallet' : plot_TopWallet})
+
+    
+    return render(request, 'stats/stats_index.html', context={'plot_div': plot_div,'plot_tx' : plot_tx,'plot_TopWallet' : plot_TopWallet,'plot_PieMc' : plot_PieMc})
+
+
