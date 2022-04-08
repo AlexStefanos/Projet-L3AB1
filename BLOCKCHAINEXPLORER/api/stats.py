@@ -216,18 +216,33 @@ def drawTransactionsChart() :
 
     return [x,y]
 
+def drawTopAdressChart() :
+    url = "https://services.tokenview.com/vipapi/address/richrange/eth/1/10?apikey=ft7EW5mB9j7EPk3hiRUt"
+    x = []
+    y = []
+    response = requests.request("GET", url)
+    Json = response.json()
+    for i in range(10) :
+        y.append(Json['data'][i]["balance"])
+        x.append(Json['data'][i]["addr"])
+    return [x,y]
+    
+
 
 client = pymongo.MongoClient("mongodb://localhost:27017/")
 database = client["BlockchainExplorer"]
 (x_data_EthChart,y_data_EthChart) = drawEthChart()
 (x_data_EthTxCt,y_data_EthTxCt) = drawTransactionsChart()
+(x_data_TopWallet,y_data_TopWallet) = drawTopAdressChart()
 
 gasPrice = getGasPrice()
 
 jsonString = {"x_data_EthPrice" : x_data_EthChart, 
             "y_data_EthPrice" : y_data_EthChart,
             "x_data_EthTxCt" : x_data_EthTxCt,
-            "y_data_EthTxCt" : y_data_EthTxCt}
+            "y_data_EthTxCt" : y_data_EthTxCt,
+            "x_data_TopWallet" : x_data_TopWallet,
+            "y_data_TopWallet" : y_data_TopWallet}
 
 collection = database["DrawChartsCollection"]
 collectionComplete = collection.find()
