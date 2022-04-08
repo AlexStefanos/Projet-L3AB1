@@ -231,29 +231,41 @@ def drawTopAdressChart() :
 
 client = pymongo.MongoClient("mongodb://localhost:27017/")
 database = client["BlockchainExplorer"]
-(x_data_EthChart,y_data_EthChart) = drawEthChart()
-(x_data_EthTxCt,y_data_EthTxCt) = drawTransactionsChart()
-(x_data_TopWallet,y_data_TopWallet) = drawTopAdressChart()
-
+col = database["DrawChartsCollection"]
+x = col.find()
 gasPrice = getGasPrice()
 
-jsonString = {"x_data_EthPrice" : x_data_EthChart, 
+for data in x:
+    dict = data.copy()
+del dict['_id']
+
+if (drawEthChart() != [dict['x_data_EthPrice'],dict['y_data_EthPrice']]) :
+    print(drawEthChart())
+    print((dict['x_data_EthPrice'],dict['y_data_EthPrice']))
+
+    (x_data_EthChart,y_data_EthChart) = drawEthChart()
+    (x_data_EthTxCt,y_data_EthTxCt) = drawTransactionsChart()
+    (x_data_TopWallet,y_data_TopWallet) = drawTopAdressChart()
+
+
+
+    jsonString = {"x_data_EthPrice" : x_data_EthChart, 
             "y_data_EthPrice" : y_data_EthChart,
             "x_data_EthTxCt" : x_data_EthTxCt,
             "y_data_EthTxCt" : y_data_EthTxCt,
             "x_data_TopWallet" : x_data_TopWallet,
             "y_data_TopWallet" : y_data_TopWallet}
 
-collection = database["DrawChartsCollection"]
-collectionComplete = collection.find()
-with(open('data.json', 'w')) as file:
-    json.dump(jsonString, file)
-with(open('data.json', 'r')) as file:
-    file_data = json.load(file)
-if(isinstance(file_data, list)):
-    collection.insert_many(file_data)
-else:
-    collection.insert_one(file_data)
+    collection = database["DrawChartsCollection"]
+    collectionComplete = collection.find()
+    with(open('data.json', 'w')) as file:
+        json.dump(jsonString, file)
+    with(open('data.json', 'r')) as file:
+        file_data = json.load(file)
+    if(isinstance(file_data, list)):
+        collection.insert_many(file_data)
+    else:
+        collection.insert_one(file_data)
 
 for i in range(15,-1,-1) :
     txCount = getTransactionCount(hex(blockNumber-i))
