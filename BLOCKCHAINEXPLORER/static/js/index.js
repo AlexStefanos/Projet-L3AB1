@@ -24,6 +24,13 @@ function link(numberTransac){
     var text = document.getElementById('transaction'.concat(numberTransac)).textContent;
     document.getElementById('transaction'.concat(numberTransac)).setAttribute("href", "tx/".concat(text));
 }
+
+function linkBlock(numberBlock){
+    var link = document.getElementById('block'.concat(numberBlock)).textContent;
+    document.getElementById('transaction'.concat(numberBlock)).setAttribute("href", "block/".concat(link));
+}
+
+
 var listeArray = [];
 var LastBlock;
 const request = new XMLHttpRequest();
@@ -144,6 +151,8 @@ requestEth.onload = ()=>{
         console.log('error ${request.status}');
     }
 }
+
+
 
 
 

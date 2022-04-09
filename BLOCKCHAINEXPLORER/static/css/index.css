@@ -75,7 +75,6 @@ th{
   border-radius: 5px;
   float: right;
   margin-right: 10%;
-  width: 38%;
   text-align: center;
 
 }
@@ -98,6 +97,10 @@ th{
   text-align: center;
 }
 
+.table{
+  width: 100%;
+}
+
 .bottomPage{
   border-radius: 10px;
   margin-top: 5%;
@@ -111,12 +114,10 @@ th{
 }
 
 .linkAllBlock{
-  display: inline-block;
   font-size : 12px;
 }
 
 .nbTransac{
   border: 1px solid black;
   font-size:7px;
-  block-size: 10px;
 }
