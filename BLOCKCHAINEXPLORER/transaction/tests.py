@@ -3,26 +3,19 @@ from django.test import TestCase
 import requests
 import plotly.express as px
 
-url = "https://api.coingecko.com/api/v3/global"
 
+apiKeyEthScan = "BC9GC2BCWXHFF4BPZYGY6RV5JED5HGB72A"
+address = "0xBaD6377Dfab84aFE786833AA8BE2721997f625B6"
 
-response = requests.request('GET', url)
+url = "https://api.etherscan.io/api?module=account&action=txlist&address=" + address + "&startblock=0&endblock=99999999&page=1&offset=15&sort=desc&apikey=" + apiKeyEthScan
+
+response = requests.request("GET", url)
 json = response.json()
-"""df = px.data.gapminder().query("year == 2007").query("continent == 'Europe'")
-df.loc[df['pop'] < 2.e6, 'country'] = 'Other countries' # Represent only large countries
-fig = px.pie(df, values='pop', names='country', title='Population of European continent')
-fig.show()"""
-percentage = 0
 tab = []
-for i in json['data']["market_cap_percentage"].values() :
-    percentage += i
-    tab.append(i)
+for i in range (15) :
+    tab.append(json["result"][i]["hash"])
+print(tab)
 
 
-restant = 1-percentage
-tab.append(restant)
-df = px.data.tips()
-fig = px.pie(df, values=tab, names='day')
-fig.show()
 
 

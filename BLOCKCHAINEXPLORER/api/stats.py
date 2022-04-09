@@ -243,6 +243,16 @@ def drawPieTopCrypto() :
     tabNomCrypto.append('others')
     return[tabValeur,tabNomCrypto]
 
+def getTransactionsOfAddress(address) : 
+    url = "https://api.etherscan.io/api?module=account&action=txlist&address=" + address + "&startblock=0&endblock=99999999&page=1&offset=15&sort=desc&apikey=" + apiKeyEthScan
+    response = requests.request("GET", url)
+    json = response.json()
+    tabHash = []
+    for i in range(15) :
+        tabHash.append(json["result"][i]["hash"])
+    AllHashTx = {"AllHashTx" : tabHash}
+    return AllHashTx
+
 client = pymongo.MongoClient("mongodb://localhost:27017/")
 database = client["BlockchainExplorer"]
 col = database["DrawChartsCollection"]
@@ -251,7 +261,7 @@ gasPrice = getGasPrice()
 
 for data in x:
     dict = data.copy()
-del dict['_id']
+
 
 if (drawEthChart() != [dict['x_data_EthPrice'],dict['y_data_EthPrice']]) :
 
