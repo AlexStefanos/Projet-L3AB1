@@ -1,3 +1,4 @@
+
 function search(){
     var text = document.getElementById('ser');
     var lg = "".concat(text.value);
@@ -41,16 +42,14 @@ request.onload = ()=>{
                 const api_urlTransac = "http://127.0.0.1:8000/api/getInfoHashBlock/".concat(b.toString());
                 const responseTransac = await fetch(api_urlTransac);
                 const dataTransac = await responseTransac.json();
+                console.log(dataTransac);
                 var nbTransac = parseInt(dataTransac.NumberTransactionsInBlock);
+                //console.log(nbTransac);
                 document.getElementById("NbTransac".concat(i)).innerHTML = "Numbers of transactions : ".concat(nbTransac);
             }
             getNbTransac();
             b = b - 1;
         }
-
-
-    
-        var bloo = 14540570;
         const request2 = new XMLHttpRequest();
         request2.open("GET", "http://127.0.0.1:8000/api/getInfoHashBlock/".concat(LastBlock.toString()));
         request2.send();
@@ -88,6 +87,29 @@ request.onload = ()=>{
                         document.getElementById("transaction".concat(i)).innerHTML = listeArray[i];
                     }
                 }
+                /*while(nbTx < 16){
+                    bloo = bloo - 1;
+                    const request3 = new XMLHttpRequest();
+                    request3.open("GET", "http://127.0.0.1:8000/api/getInfoHashBlock/".concat(bloo.toString()));
+                    request3.send();
+                    request3.onload = ()=>{
+                        if(request3.status === 200){
+                            var blockAl = JSON.parse(request3.response);
+                            var nbTxT = parseInt(blockAl['NumberTransactionsInBlock']);
+                            nbTx = nbTx + nbTxT;
+                            console.log(nbTx);
+                            var listestr =  blockAl['AllTransactionsHash'];
+                            var listeArray2 = listestr.split(/[\s'',]+/);
+                            var listePop2 = listeArray2.pop();
+	                        var listeShift2 = listeArray2.shift();
+                            listeArray = listeArray.concat(listeArray2);
+                            console.log(listeArray);
+                        }
+                        else{
+                            console.log('error ${request3.status}');
+                        }
+                    }
+                }*/
                 for (var i = 1 ; i<16; i++){
                     document.getElementById("transaction".concat(i)).innerHTML = listeArray[i];
                 }
@@ -95,7 +117,14 @@ request.onload = ()=>{
             else{
                 console.log('error ${request2.status}');
             }
-        }     
+            
+            for (let i = 1 ; i<16; i++){
+                document.getElementById("transaction".concat(i)).innerHTML = listeArray[i];
+            }
+
+            //document.getElementById("gasPrice").innerHTML = exemple['GasPrice(Gwei)'];
+        }
+       
     }
     else{
         console.log('error ${request.status}');
@@ -108,11 +137,13 @@ requestEth.send();
 requestEth.onload = ()=>{
     if(requestEth.status === 200){
         var ethPrice = JSON.parse(requestEth.response);
+        //var price = ethPrice['USD'];
         document.getElementById("ethPrice").innerHTML = ethPrice["USD"];
     }
     else{
         console.log('error ${request.status}');
     }
 }
+
 
 
