@@ -264,7 +264,6 @@ for data in x:
 
 
 if (drawEthChart() != [dict['x_data_EthPrice'],dict['y_data_EthPrice']]) :
-
     (x_data_EthChart,y_data_EthChart) = drawEthChart()
     (x_data_EthTxCt,y_data_EthTxCt) = drawTransactionsChart()
     (x_data_TopWallet,y_data_TopWallet) = drawTopAdressChart()

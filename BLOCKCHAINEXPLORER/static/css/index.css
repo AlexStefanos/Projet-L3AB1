@@ -116,6 +116,7 @@ th{
 }
 
 .nbTransac{
+  border: 1px solid black;
   font-size:7px;
   block-size: 10px;
 }
