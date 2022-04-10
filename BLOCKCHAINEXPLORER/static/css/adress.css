@@ -23,7 +23,7 @@
     font-family: sans-serif;
     min-width: 400px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
-    border: 10px solid rgb(42, 55, 173);
+    border: 5px solid rgb(42, 55, 173);
     padding: 8px;
 }
 
@@ -37,14 +37,14 @@
     padding: 12px 15px;
 }
 
-.styled-table  tr {
+.listTransaction  tr {
     border-bottom: 1px solid #dddddd;
 }
 
-.styled-table tr:nth-of-type(even) {
+.listTransaction tr:nth-of-type(even) {
     background-color: #f3f3f3;
 }
 
-.styled-table tr:last-of-type {
-    border-bottom: 2px solid #009879;
+.listTransaction tr:last-of-type {
+    border-bottom: 2px solid #3648ad;
 }
