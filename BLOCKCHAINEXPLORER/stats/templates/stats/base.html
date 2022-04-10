@@ -17,89 +17,104 @@
   <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <div class="container-fluid">
-        <a class="navbar-brand" href="../">Blockchain Explorer</a>
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav ul">
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="../">Home</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link Documentation" href="../documentation">Documentation</a>
-              </li>
-            </ul>
-            <form class="d-flex">
-              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-              <button class="btn btn-outline-success" type="submit">Search</button>
-            </form>
-          </div>
+        <a class="navbar-brand" href="">Home</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav ul">
+            <li class="nav-item">
+              <a class="nav-link Stats" aria-current="page" href="stats">Stats</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link Documentation" href="documentation">Documentation</a>
+            </li>
+          </ul>
+          <form class="d-flex" id = "tamere">
+            <input class="form-control me-2" type="search" placeholder="Block/Adress/Hash" aria-label="Search" id="ser">
+            <button class="btn btn-outline-success" type="button" onclick="search()" >Search</button>
+          </form>
+        </div>
       </div>
     </nav>
     {% block body %}
     {% endblock %}
     <br>
     <br>
-    <div class="card">
-      <div class="card-header">
-        Ethereum price in the last 14 days 
-      </div>
-      <div class="card-body">
-        <blockquote class="blockquote mb-0">
-          <p></p>
-          {% autoescape off %}
-          {{ plot_div }}
-          {% endautoescape %}
-          <br>
-          <footer class="blockquote-footer">Someone famous in <cite title="Source Title">Source Title</cite></footer>
-          <br>
-        </blockquote>
-      </div>
-    </div>
-    <div class="card">
-      <div class="card-header">
-        Ethereum transaction history in the last 14 days 
-      </div>
-      <div class="card-body">
-        <blockquote class="blockquote mb-0">
-          <p></p>
-          {% autoescape off %}
-          {{ plot_tx }}
-          {% endautoescape %}
-          <br>
-          <footer class="blockquote-footer">Someone famous in <cite title="Source Title">Source Title</cite></footer>
-          <br>
-        </blockquote>
-      </div>
-    </div>
-    <div class="card">
-      <div class="card-header">
-        Richest adresses in Ethereum 
-      </div>
-      <div class="card-body">
-        <blockquote class="blockquote mb-0">
-          <p></p>
-          {% autoescape off %}
-          {{ plot_TopWallet }}
-          {% endautoescape %}
-          <br>
-          <footer class="blockquote-footer">https://services.tokenview.com/vipapi/address/richrange/eth/1/10?apikey=ft7EW5mB9j7EPk3hiRUt</footer>
-          <br>
-        </blockquote>
-      </div>
-    </div>
-    <div class="card">
-      <div class="card-header">
-        Marketcap Repartition 
-      </div>
-      <div class="card-body">
-        <blockquote class="blockquote mb-0">
-          <p></p>
-          {% autoescape off %}
-          {{ plot_PieMc }}
-          {% endautoescape %}
-          <br>
-          <footer class="blockquote-footer"><cite title="Source Title">https://api.coingecko.com/api/v3/global</cite></footer>
-          <br>
-        </blockquote>
+    <div class="container">
+      <div class="row row-cols-2">
+        <div class="col">
+          <div class="card">
+            <div class="card-header">
+              Ethereum price in the last 14 days 
+            </div>
+            <div class="card-body">
+              <blockquote class="blockquote mb-0">
+                <p></p>
+                {% autoescape off %}
+                {{ plot_div }}
+                {% endautoescape %}
+                <br>
+                <footer class="blockquote-footer">Someone famous in <cite title="Source Title">Source Title</cite></footer>
+                <br>
+              </blockquote>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card">
+            <div class="card-header">
+              Ethereum transaction history in the last 14 days 
+            </div>
+            <div class="card-body">
+              <blockquote class="blockquote mb-0">
+                <p></p>
+                {% autoescape off %}
+                {{ plot_tx }}
+                {% endautoescape %}
+                <br>
+                <footer class="blockquote-footer">Someone famous in <cite title="Source Title">Source Title</cite></footer>
+                <br>
+              </blockquote>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card">
+            <div class="card-header">
+              Richest adresses in Ethereum 
+            </div>
+            <div class="card-body">
+              <blockquote class="blockquote mb-0">
+                <p></p>
+                {% autoescape off %}
+                {{ plot_TopWallet }}
+                {% endautoescape %}
+                <br>
+                <footer class="blockquote-footer">https://services.tokenview.com/vipapi/address/richrange/eth/1/10?apikey=ft7EW5mB9j7EPk3hiRUt</footer>
+                <br>
+              </blockquote>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card">
+            <div class="card-header">
+              Marketcap Repartition 
+            </div>
+            <div class="card-body">
+              <blockquote class="blockquote mb-0">
+                <p></p>
+                {% autoescape off %}
+                {{ plot_PieMc }}
+                {% endautoescape %}
+                <br>
+                <footer class="blockquote-footer"><cite title="Source Title">https://api.coingecko.com/api/v3/global</cite></footer>
+                <br>
+              </blockquote>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </body>
