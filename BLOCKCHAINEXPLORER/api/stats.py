@@ -262,7 +262,6 @@ gasPrice = getGasPrice()
 for data in x:
     dict = data.copy()
 
-
 if (drawEthChart() != [dict['x_data_EthPrice'],dict['y_data_EthPrice']]) :
     (x_data_EthChart,y_data_EthChart) = drawEthChart()
     (x_data_EthTxCt,y_data_EthTxCt) = drawTransactionsChart()
