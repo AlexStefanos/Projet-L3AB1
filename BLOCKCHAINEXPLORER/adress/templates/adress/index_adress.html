@@ -7,6 +7,11 @@ Index
 {% endblock %}
 
 {% block body %}
+<div>
+    <p class = "adress" id = "ad">
+        Adress :
+    </p>
+</div>
 <div class = "global">
     <div class = "adressEth">
         <div class ="balance">
@@ -15,6 +20,13 @@ Index
         <div class = "Value" onload = "adress()">
             <h6 id = "value"> Value :</h6>
         </div>
+    </div>
+    <div class="TransactionContent">
+        <table class = "listTransaction" id ="tableTransac">
+            <tr class = "L1">
+                <th class = "table" id ="titre"> Latest transaction </th>
+            </tr>
+        </table>
     </div>
 </div>
 {% endblock%}

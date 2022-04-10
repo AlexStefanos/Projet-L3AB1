@@ -68,5 +68,12 @@ def getWallet(request,pk=None):
 def getEthPrice(request):
     dict = stats.getEthPrice()
     return Response(dict)
+
+@api_view(['GET'])
+def getAllTransactionsAdress(request,pk =None):
+    adress = pk
+    dict = stats.getAllTransactionAdress(adress)
+    return Response(dict)
+
         
 
