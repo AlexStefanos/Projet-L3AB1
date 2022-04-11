@@ -1,3 +1,4 @@
+import collections
 import urllib.parse
 import pymongo
 import requests
@@ -12,7 +13,6 @@ import matplotlib.pyplot as plt
 import math
 import seaborn as sns
 import matplotlib.ticker
-from datetime import datetime
 
 sns.set()
 
@@ -74,14 +74,6 @@ def getBlock(BlockNumber) :
     result = json['result']['transactions']
     return (result)
 
-def getBlockBis(BlockNumber) :
-    json_data = {"jsonrpc":"2.0","method":"eth_getBlockByNumber","params": [BlockNumber,False],"id":1}
-    resp = session.post(url, headers=headers, json = json_data)
-    json = resp.json()
-    epoch_time =  (int(json['result']['timestamp'],16))
-    result = { "hash": json['result']['hash'], "difficulty" : int(json['result']['difficulty'],16), "total difficulty" : int(json['result']['totalDifficulty'],16) ,"miner" : json['result']['miner'], "timestamp" : datetime.utcfromtimestamp(epoch_time).strftime('%Y-%m-%d %H:%M:%S'), "size" : int(json['result']['size'],16)}
-    return (result)
-
 def getTransactionCount(blockNumber) :
     json_data = {"jsonrpc":"2.0","method":"eth_getBlockTransactionCountByNumber","params": [blockNumber],"id":1}
     resp = session.post(url, headers=headers, json = json_data)
@@ -100,7 +92,7 @@ def getTransactionFromTo(TransactionHash) :
     json_data = {"jsonrpc":"2.0","method":"eth_getTransactionByHash","params": [TransactionHash],"id":1}
     resp = session.post(url, headers=headers, json = json_data)
     json = resp.json()
-    FromTo = {"from" : json['result']['from'], "to" : json['result']['to'], "gasPrice" : int(json['result']['gasPrice'],16)*10**(-9), "blockNumber" : int(json['result']['blockNumber'],16), "value" : int(json['result']['value'],16)*10**(-18)}
+    FromTo = {"from" : json['result']['from'], "to" : json['result']['to']}
     return (FromTo)
 
 def getPriceEth() :
@@ -225,7 +217,6 @@ def drawTransactionsChart() :
 
     return [x,y]
 
-"""
 def drawTopAdressChart() :
     data = {'code': 1, 'msg': '成功', 'data': [{'addr': '0x00000000219ab540356cbb839cbe05303d7705fa', 'balance': 11352626.000069, 'txCnt': 34838}, {'addr': '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2', 'balance': 6340481.331016232, 'txCnt': 3973918}, {'addr': '0xda9dfa130df4de4673b89022ee50ff26f6ea73cf', 'balance': 2113030.0012, 'txCnt': 64}, {'addr': '0xbe0eb53f46cd790cd13851d5eff43d12404d33e8', 'balance': 1996008.2837798258, 'txCnt': 1088}, {'addr': '0x73bceb1cd57c711feac4224d062b0f6ff338501e', 'balance': 1923504.538509494, 'txCnt': 480}, {'addr': '0x9bf4001d307dfd62b26a2f1307ee0c0307632d59', 'balance': 1490000.0180927091, 'txCnt': 103}, {'addr': '0x4ddc2d193948926d02f9b1fe9e1daa0718270ed5', 'balance': 1028541.690326043, 'txCnt': 25020}, {'addr': '0x61edcdf5bb737adffe5043706e7c5bb1f1a56eea', 'balance': 929498.95358134, 'txCnt': 336}, {'addr': '0xdc24316b9ae028f1497c275eb9192a3ea0f67022', 'balance': 784665.045977826, 'txCnt': 12732}, {'addr': '0x011b6e24ffb0b5f5fcc564cf4183c5bbbc96d515', 'balance': 593103.3479250012, 'txCnt': 50}]}
     x = []
@@ -234,7 +225,7 @@ def drawTopAdressChart() :
         y.append(data['data'][i]["balance"])
         x.append(data['data'][i]["addr"])
     return [x,y]
-"""    
+    
 def drawPieTopCrypto() :
     url = "https://api.coingecko.com/api/v3/global"
     response = requests.request('GET', url)
@@ -261,31 +252,82 @@ def getTransactionsOfAddress(address) :
     AllHashTx = {"AllHashTx" : tabHash}
     return AllHashTx
 
+def companiesHoldingInBtc() :
+    url = "https://api.coingecko.com/api/v3/companies/public_treasury/bitcoin"
+
+    response = requests.request("GET", url)
+    Json = response.json()
+    tabValue = []
+    tabNamesCompanies = []
+    sum_Holding = 0
+    for i in range (len((Json["companies"]))) :
+        tabNamesCompanies.append(Json["companies"][i]['name'])
+        tabValue.append(Json["companies"][i]['total_holdings'])
+        sum_Holding += Json["companies"][i]['total_holdings']
+
+    return[tabValue,tabNamesCompanies]
+
+
+
+
 client = pymongo.MongoClient("mongodb://localhost:27017/")
 database = client["BlockchainExplorer"]
 col = database["DrawChartsCollection"]
-x = col.find()
-gasPrice = getGasPrice()
 
+if(col.count() == 0) :
+
+
+
+
+
+    jsonString = {"x_data_EthPrice" : "T", 
+            "y_data_EthPrice" : None,
+            "x_data_EthTxCt" : None,
+            "y_data_EthTxCt" : None,
+            "x_data_TopWallet" : None,
+            "y_data_TopWallet" : None,
+            "x_data_PieMc" : None,
+            "y_data_PieMc" : None,
+            "x_data_PieCompanies" : None,
+            "y_data_PieCompanies" : None}
+
+
+
+    collection = database["DrawChartsCollection"]
+    collectionComplete = collection.find()
+    with(open('draw.json', 'w')) as file:
+        json.dump(jsonString, file)
+    with(open('draw.json', 'r')) as file:
+        file_data = json.load(file)
+    if(isinstance(file_data, list)):
+        collection.insert_many(file_data)
+    else:
+        collection.insert_one(file_data)
+
+
+gasPrice = getGasPrice()
+x = col.find()
 for data in x:
     dict = data.copy()
 
-#if (drawEthChart() != [dict['x_data_EthPrice'],dict['y_data_EthPrice']]) :
-""""if(True):
+if (drawEthChart() != [dict['x_data_EthPrice'],dict['y_data_EthPrice']]) :
+
     (x_data_EthChart,y_data_EthChart) = drawEthChart()
     (x_data_EthTxCt,y_data_EthTxCt) = drawTransactionsChart()
-    #(x_data_TopWallet,y_data_TopWallet) = drawTopAdressChart()
+    (x_data_TopWallet,y_data_TopWallet) = drawTopAdressChart()
     (x_data_PieMC,y_data_PieMc) = drawPieTopCrypto()
-
+    (x_data_PieCompanies,y_data_PieCompanies) = companiesHoldingInBtc()
 
     jsonString = {"x_data_EthPrice" : x_data_EthChart, 
             "y_data_EthPrice" : y_data_EthChart,
             "x_data_EthTxCt" : x_data_EthTxCt,
             "y_data_EthTxCt" : y_data_EthTxCt,
-            #"x_data_TopWallet" : x_data_TopWallet,
-            #"y_data_TopWallet" : y_data_TopWallet,
+            "x_data_TopWallet" : x_data_TopWallet,
+            "y_data_TopWallet" : y_data_TopWallet,
             "x_data_PieMc" : x_data_PieMC,
-            "y_data_PieMc" : y_data_PieMc}
+            "y_data_PieMc" : y_data_PieMc,
+            "x_data_PieCompanies" : x_data_PieCompanies,
+            "y_data_PieCompanies" : y_data_PieCompanies}
 
     collection = database["DrawChartsCollection"]
     collectionComplete = collection.find()
@@ -296,40 +338,41 @@ for data in x:
     if(isinstance(file_data, list)):
         collection.insert_many(file_data)
     else:
-        collection.insert_one(file_data)"""
+        collection.insert_one(file_data)
 
-def refresh():
-    blockNumber = getBlockNumber()
-    blockNumberHex = hex(blockNumber)
-    for i in range(15,-1,-1) :
-        txCount = getTransactionCount(hex(blockNumber-i))
-        jsonString = {"NumberLastBlock" : str(blockNumber-i), 
-                "GasPrice(Gwei)" : str(gasPrice), 
-                "NbTransactions" : str(txCount)}
-        collection = database["LastBlockCollection"]
-        collectionComplete = collection.find()
-        with(open('data.json', 'w')) as file:
-            json.dump(jsonString, file)
-        with(open('data.json', 'r')) as file:
-            file_data = json.load(file)
-        if(isinstance(file_data, list)):
-            collection.insert_many(file_data)
-        else:
-            collection.insert_one(file_data)
-    
-        InfoBlock = getBlock(hex(blockNumber-i))
-        jsonStringHash = {"NumberBlock" : str(blockNumber-i), 
-                    "NumberTransactionsInBlock" : str(txCount),
-                    "AllTransactionsHash" : str(InfoBlock)}
-        collection = database["InfoHashBlock"]
-        collectionComplete = collection.find()
-        with(open('data.json', 'w')) as file:
-            json.dump(jsonStringHash, file)
-        with(open('data.json', 'r')) as file:
-            file_data = json.load(file)
-        if(isinstance(file_data, list)):
-            collection.insert_many(file_data)
-        else:
-            collection.insert_one(file_data)
-
+def refresh(): 
+    blockNumber = getBlockNumber() 
+    blockNumberHex = hex(blockNumber) 
+    for i in range(15,-1,-1) : 
+        txCount = getTransactionCount(hex(blockNumber-i)) 
+        jsonString = {"NumberLastBlock" : str(blockNumber-i),  
+                "GasPrice(Gwei)" : str(gasPrice),  
+                "NbTransactions" : str(txCount)} 
+        collection = database["LastBlockCollection"] 
+        collectionComplete = collection.find() 
+        with(open('data.json', 'w')) as file: 
+            json.dump(jsonString, file) 
+        with(open('data.json', 'r')) as file: 
+            file_data = json.load(file) 
+        if(isinstance(file_data, list)): 
+            collection.insert_many(file_data) 
+        else: 
+            collection.insert_one(file_data) 
+     
+        InfoBlock = getBlock(hex(blockNumber-i)) 
+        jsonStringHash = {"NumberBlock" : str(blockNumber-i),  
+                    "NumberTransactionsInBlock" : str(txCount), 
+                    "AllTransactionsHash" : str(InfoBlock)} 
+        collection = database["InfoHashBlock"] 
+        collectionComplete = collection.find() 
+        with(open('data.json', 'w')) as file: 
+            json.dump(jsonStringHash, file) 
+        with(open('data.json', 'r')) as file: 
+            file_data = json.load(file) 
+        if(isinstance(file_data, list)): 
+            collection.insert_many(file_data) 
+        else: 
+            collection.insert_one(file_data) 
+         
+ 
 refresh()

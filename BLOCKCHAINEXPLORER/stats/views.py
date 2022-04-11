@@ -45,6 +45,11 @@ def stats_index(request):
     fig = px.pie(df,values=x_data_PieMc, names=y_data_PieMc)
     plot_PieMc = plot(fig,output_type = 'div')
 
-    return render(request, 'stats/stats_index.html', context={'plot_div': plot_div,'plot_tx' : plot_tx,'plot_TopWallet' : plot_TopWallet,'plot_PieMc' : plot_PieMc})
+    x_data_PieCompanies = dict['x_data_PieCompanies']
+    y_data_PieCompanies = dict['y_data_PieCompanies']
+    fig = px.pie(df,values=x_data_PieCompanies, names=y_data_PieCompanies)
+    plot_PieCompanies = plot(fig,output_type = 'div')
+
+    return render(request, 'stats/stats_index.html', context={'plot_div': plot_div,'plot_tx' : plot_tx,'plot_TopWallet' : plot_TopWallet,'plot_PieMc' : plot_PieMc, 'plot_PieCompanies' : plot_PieCompanies})
 
 
