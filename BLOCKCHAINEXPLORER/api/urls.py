@@ -9,4 +9,5 @@ urlpatterns = [
     path('getWallet/<str:pk>',views.getWallet),
     path('getEthPrice',views.getEthPrice),
     path('getAllTransactionsAdress/<str:pk>',views.getAllTransactionsAdress),
+    path('getBlockBis/<int:pk>',views.getBlockBis),
 ]

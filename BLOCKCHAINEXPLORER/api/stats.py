@@ -12,6 +12,7 @@ import matplotlib.pyplot as plt
 import math
 import seaborn as sns
 import matplotlib.ticker
+from datetime import datetime
 
 sns.set()
 
@@ -73,6 +74,14 @@ def getBlock(BlockNumber) :
     result = json['result']['transactions']
     return (result)
 
+def getBlockBis(BlockNumber) :
+    json_data = {"jsonrpc":"2.0","method":"eth_getBlockByNumber","params": [BlockNumber,False],"id":1}
+    resp = session.post(url, headers=headers, json = json_data)
+    json = resp.json()
+    epoch_time =  (int(json['result']['timestamp'],16))
+    result = { "hash": json['result']['hash'], "difficulty" : int(json['result']['difficulty'],16), "total difficulty" : int(json['result']['totalDifficulty'],16) ,"miner" : json['result']['miner'], "timestamp" : datetime.utcfromtimestamp(epoch_time).strftime('%Y-%m-%d %H:%M:%S'), "size" : int(json['result']['size'],16)}
+    return (result)
+
 def getTransactionCount(blockNumber) :
     json_data = {"jsonrpc":"2.0","method":"eth_getBlockTransactionCountByNumber","params": [blockNumber],"id":1}
     resp = session.post(url, headers=headers, json = json_data)
@@ -91,7 +100,7 @@ def getTransactionFromTo(TransactionHash) :
     json_data = {"jsonrpc":"2.0","method":"eth_getTransactionByHash","params": [TransactionHash],"id":1}
     resp = session.post(url, headers=headers, json = json_data)
     json = resp.json()
-    FromTo = {"from" : json['result']['from'], "to" : json['result']['to']}
+    FromTo = {"from" : json['result']['from'], "to" : json['result']['to'], "gasPrice" : int(json['result']['gasPrice'],16)*10**(-9), "blockNumber" : int(json['result']['blockNumber'],16), "value" : int(json['result']['value'],16)*10**(-18)}
     return (FromTo)
 
 def getPriceEth() :
