@@ -1,3 +1,5 @@
+
+
 .global{
     box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.15);
     padding: 1%;
@@ -17,13 +19,15 @@
 
 
 .listTransaction{
+    margin-left: auto;
+    margin-right: auto;
     border-collapse: collapse;
-    margin-left: 32%;
     font-size: 0.9em;
     font-family: sans-serif;
     min-width: 400px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
     border: 5px solid rgb(42, 55, 173);
+    border-radius: 3px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
     padding: 8px;
 }
 
@@ -37,14 +41,43 @@
     padding: 12px 15px;
 }
 
-.listTransaction  tr {
+td{
+    border-bottom: 1px dotted gray;
+}
+
+.styled-table  tr {
     border-bottom: 1px solid #dddddd;
 }
 
-.listTransaction tr:nth-of-type(even) {
+.styled-table tr:nth-of-type(even) {
     background-color: #f3f3f3;
 }
 
-.listTransaction tr:last-of-type {
-    border-bottom: 2px solid #3648ad;
+.styled-table tr:last-of-type {
+    border-bottom: 2px solid #009879;
 }
+
+.Contact{
+    margin-left: 40%;
+    margin-right: 40%;
+  }
+  
+  .NameArt{
+    padding: 5%;
+    display: inline-block;
+  }
+  
+  .NameAle{
+    padding: 4%;
+    display: inline-block;
+  }
+  
+  .NameHan{
+    padding: 4%;
+    display: inline-block;
+  }
+  
+  .NameSam{
+    padding: 5%;
+    display: inline-block;
+  }

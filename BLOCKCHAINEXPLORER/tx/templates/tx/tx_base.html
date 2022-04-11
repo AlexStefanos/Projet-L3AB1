@@ -14,30 +14,29 @@
     {% endblock %}
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="http://127.0.0.1:8000/">Blockchain Explorer</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav ul">
-
-            <li class="nav-item">
-              <a class="nav-link Stats" aria-current="page" href="http://127.0.0.1:8000/stats">Stats</a>
-            </li>
-
-            <li class="nav-item">
-              <a class="nav-link Documentation" href="http://127.0.0.1:8000/documentation">Documentation</a>
-            </li>
-          </ul>
-          <form class="d-flex" id = "tamere">
-            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" id="ser">
-            <button class="btn btn-outline-success" type="button" onclick="search()" >Search</button>
-          </form>
-        </div>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="http://127.0.0.1:8000/">Home</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ul">
+          <li class="nav-item">
+            <a class="nav-link Stats" aria-current="page" href="../stats">Stats</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link Documentation" href="../documentation">Documentation</a>
+          </li>
+        </ul>
+        <form class="d-flex" id = "tamere">
+          <input class="form-control me-2" type="search" placeholder="Block/Adress/Hash" aria-label="Search" id="ser">
+          <button class="btn btn-outline-success" type="button" onclick="search()" >Search</button>
+        </form>
       </div>
-    </nav>
+      <h1>Blockchain Explorer</h1>
+    </div>
+  </nav>
 
     {% block body %}
 

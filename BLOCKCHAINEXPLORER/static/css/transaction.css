@@ -19,3 +19,28 @@ h3{
     margin: 5%;
     text-align: center;
 }
+
+.Contact{
+    margin-left: 40%;
+    margin-right: 40%;
+  }
+  
+  .NameArt{
+    padding: 5%;
+    display: inline-block;
+  }
+  
+  .NameAle{
+    padding: 4%;
+    display: inline-block;
+  }
+  
+  .NameHan{
+    padding: 4%;
+    display: inline-block;
+  }
+  
+  .NameSam{
+    padding: 5%;
+    display: inline-block;
+  }
