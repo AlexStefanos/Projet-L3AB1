@@ -1,4 +1,4 @@
-{% extends 'tx/tx_base.html' %}
+{% extends 'block/base.html' %}
 {% block title %}
 Transaction
 {% endblock %}
@@ -11,14 +11,28 @@ Transaction
     <h1>Block Details</h1>
 </div>
 
-<div class="Sender">
-    <h2>Number of transactions :</h2>
-    <h2 id = "sendAdr"></h2>
-</div>
-
-<div class="Receiver">
-    <h2>Difficulty :</h2>
-    <h2 id = "recAdr"></h2>
+<div class="content">
+    <div class="hash">
+        <h2 id ="hashB">Hash :</h2>
+    </div>
+    <div class="nbTransac">
+        <h2 id = "nbTransacB">Number of transactions :</h2>
+    </div>
+    <div class="timeStamp">
+        <h2 id = "time" > time  :</h2>
+    </div>
+    <div class="size">
+        <h2 id ="sizeB">Size :</h2>
+    </div>
+    <div class="miner">
+        <h2 id ="minerB">Size :</h2>
+    </div>
+    <div class="Difficulty">
+        <h2 id = "dif">Difficulty :</h2>
+    </div>
+    <div class="total">
+        <h2 id = "tot">Total Difficulty :</h2>
+    </div>
 </div>
 
 <div class="bottom"></div>

@@ -75,5 +75,10 @@ def getAllTransactionsAdress(request,pk =None):
     dict = stats.getAllTransactionAdress(adress)
     return Response(dict)
 
+@api_view(['GET'])
+def getBlockBis(request,pk =None):
+    block = hex(pk)
+    dict = stats.getBlockBis(block)
+    return Response(dict) 
         
 

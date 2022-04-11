@@ -27,7 +27,7 @@ function link(numberTransac){
 
 function linkBlock(numberBlock){
     var link = document.getElementById('block'.concat(numberBlock)).textContent;
-    document.getElementById('transaction'.concat(numberBlock)).setAttribute("href", "block/".concat(link));
+    document.getElementById('block'.concat(numberBlock)).setAttribute("href", "block/".concat(link));
 }
 
 
