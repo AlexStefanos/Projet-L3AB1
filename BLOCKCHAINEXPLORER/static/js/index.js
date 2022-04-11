@@ -138,6 +138,18 @@ request.onload = ()=>{
     else{
         console.log('error ${request.status}');
     }
+    const requestEth = new XMLHttpRequest();
+    requestEth.open("GET", "http://127.0.0.1:8000/api/getEthPrice");
+    requestEth.send();
+    requestEth.onload = ()=>{
+        if(requestEth.status === 200){
+            var Price = JSON.parse(requestEth.response);
+            document.getElementById("title").innerHTML = "Ether Price ($): ".concat(Price['USD']);
+        }
+        else{
+            console.log('error ${request.status}');
+        }
+    }
 }
 async function getRefresh(){
     const api_urlTransac = "http://127.0.0.1:8000/api/Refresh";

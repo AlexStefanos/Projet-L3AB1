@@ -271,7 +271,7 @@ for data in x:
     dict = data.copy()
 
 #if (drawEthChart() != [dict['x_data_EthPrice'],dict['y_data_EthPrice']]) :
-if(True):
+""""if(True):
     (x_data_EthChart,y_data_EthChart) = drawEthChart()
     (x_data_EthTxCt,y_data_EthTxCt) = drawTransactionsChart()
     #(x_data_TopWallet,y_data_TopWallet) = drawTopAdressChart()
@@ -296,7 +296,7 @@ if(True):
     if(isinstance(file_data, list)):
         collection.insert_many(file_data)
     else:
-        collection.insert_one(file_data)
+        collection.insert_one(file_data)"""
 
 def refresh():
     blockNumber = getBlockNumber()
@@ -331,6 +331,5 @@ def refresh():
             collection.insert_many(file_data)
         else:
             collection.insert_one(file_data)
-        print("ta mere")
 
 refresh()
