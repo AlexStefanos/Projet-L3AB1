@@ -22,13 +22,13 @@ request.onload = ()=>{
     if(request.status === 200){
         var res = JSON.parse(request.response);
         var balance = res['EthWalletBalance'];
-        document.getElementById("ethBalance").innerHTML = "Etherum balance : ".concat(balance) + " Ether";
+        document.getElementById("ethBalance").innerHTML = "Ethereum balance : ".concat(balance) + " Ethereum";
         async function getEthPrice(){
             const api_urlPrice = "http://127.0.0.1:8000/api/getEthPrice";
             const responsePrice = await fetch(api_urlPrice);
             const dataPrice = await responsePrice.json();
             var value = Math.round((dataPrice.USD * balance) * 100) / 100;
-            document.getElementById("value").innerHTML = "Value : ".concat(value) + " Dollars";
+            document.getElementById("value").innerHTML = "Value : $".concat(value) ;
         }
         getEthPrice();
 

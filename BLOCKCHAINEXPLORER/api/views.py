@@ -80,5 +80,11 @@ def getBlockBis(request,pk =None):
     block = hex(pk)
     dict = stats.getBlockBis(block)
     return Response(dict) 
+
+@api_view(['GET'])
+def Refresh(request):
+    stats.refresh()
+    dict = { "Refresh" : "OK"}
+    return Response(dict)
         
 

@@ -298,33 +298,39 @@ if(True):
     else:
         collection.insert_one(file_data)
 
-for i in range(15,-1,-1) :
-    txCount = getTransactionCount(hex(blockNumber-i))
-    jsonString = {"NumberLastBlock" : str(blockNumber-i), 
-            "GasPrice(Gwei)" : str(gasPrice), 
-            "NbTransactions" : str(txCount)}
-    collection = database["LastBlockCollection"]
-    collectionComplete = collection.find()
-    with(open('data.json', 'w')) as file:
-        json.dump(jsonString, file)
-    with(open('data.json', 'r')) as file:
-        file_data = json.load(file)
-    if(isinstance(file_data, list)):
-        collection.insert_many(file_data)
-    else:
-        collection.insert_one(file_data)
+def refresh():
+    blockNumber = getBlockNumber()
+    blockNumberHex = hex(blockNumber)
+    for i in range(15,-1,-1) :
+        txCount = getTransactionCount(hex(blockNumber-i))
+        jsonString = {"NumberLastBlock" : str(blockNumber-i), 
+                "GasPrice(Gwei)" : str(gasPrice), 
+                "NbTransactions" : str(txCount)}
+        collection = database["LastBlockCollection"]
+        collectionComplete = collection.find()
+        with(open('data.json', 'w')) as file:
+            json.dump(jsonString, file)
+        with(open('data.json', 'r')) as file:
+            file_data = json.load(file)
+        if(isinstance(file_data, list)):
+            collection.insert_many(file_data)
+        else:
+            collection.insert_one(file_data)
     
-    InfoBlock = getBlock(hex(blockNumber-i))
-    jsonStringHash = {"NumberBlock" : str(blockNumber-i), 
-                "NumberTransactionsInBlock" : str(txCount),
-                "AllTransactionsHash" : str(InfoBlock)}
-    collection = database["InfoHashBlock"]
-    collectionComplete = collection.find()
-    with(open('data.json', 'w')) as file:
-        json.dump(jsonStringHash, file)
-    with(open('data.json', 'r')) as file:
-        file_data = json.load(file)
-    if(isinstance(file_data, list)):
-        collection.insert_many(file_data)
-    else:
-        collection.insert_one(file_data)
+        InfoBlock = getBlock(hex(blockNumber-i))
+        jsonStringHash = {"NumberBlock" : str(blockNumber-i), 
+                    "NumberTransactionsInBlock" : str(txCount),
+                    "AllTransactionsHash" : str(InfoBlock)}
+        collection = database["InfoHashBlock"]
+        collectionComplete = collection.find()
+        with(open('data.json', 'w')) as file:
+            json.dump(jsonStringHash, file)
+        with(open('data.json', 'r')) as file:
+            file_data = json.load(file)
+        if(isinstance(file_data, list)):
+            collection.insert_many(file_data)
+        else:
+            collection.insert_one(file_data)
+        print("ta mere")
+
+refresh()

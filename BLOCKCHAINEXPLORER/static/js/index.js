@@ -1,4 +1,3 @@
-
 function search(){
     var text = document.getElementById('ser');
     var lg = "".concat(text.value);
@@ -29,7 +28,12 @@ function linkBlock(numberBlock){
     var link = document.getElementById('block'.concat(numberBlock)).textContent;
     document.getElementById('block'.concat(numberBlock)).setAttribute("href", "block/".concat(link));
 }
-
+async function getRefresh(){
+    const api_urlTransac = "http://127.0.0.1:8000/api/Refresh";
+    const responseTransac = await fetch(api_urlTransac);
+    const dataTransac = await responseTransac.json();
+    console.log(dataTransac);
+}
 
 var listeArray = [];
 var LastBlock;
@@ -49,9 +53,7 @@ request.onload = ()=>{
                 const api_urlTransac = "http://127.0.0.1:8000/api/getInfoHashBlock/".concat(b.toString());
                 const responseTransac = await fetch(api_urlTransac);
                 const dataTransac = await responseTransac.json();
-                console.log(dataTransac);
                 var nbTransac = parseInt(dataTransac.NumberTransactionsInBlock);
-                //console.log(nbTransac);
                 document.getElementById("NbTransac".concat(i)).innerHTML = "Numbers of transactions : ".concat(nbTransac);
             }
             getNbTransac();
@@ -137,22 +139,11 @@ request.onload = ()=>{
         console.log('error ${request.status}');
     }
 }
-
-const requestEth = new XMLHttpRequest();
-requestEth.open("GET", "http://127.0.0.1:8000/api/getEthPrice");
-requestEth.send();
-requestEth.onload = ()=>{
-    if(requestEth.status === 200){
-        var ethPrice = JSON.parse(requestEth.response);
-        //var price = ethPrice['USD'];
-        document.getElementById("ethPrice").innerHTML = ethPrice["USD"];
-    }
-    else{
-        console.log('error ${request.status}');
-    }
+async function getRefresh(){
+    const api_urlTransac = "http://127.0.0.1:8000/api/Refresh";
+    const responseTransac = await fetch(api_urlTransac);
+    const dataTransac = await responseTransac.json();
+    console.log(dataTransac);
 }
-
-
-
-
-
+getRefresh();
+setTimeout(() => { loadPage(); }, 5000);
