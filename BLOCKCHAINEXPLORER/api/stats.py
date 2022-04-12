@@ -264,13 +264,12 @@ def getTransactionsOfAddress(address) :
 
 def companiesHoldingInBtc() :
     url = "https://api.coingecko.com/api/v3/companies/public_treasury/bitcoin"
-
     response = requests.request("GET", url)
     Json = response.json()
     tabValue = []
     tabNamesCompanies = []
     sum_Holding = 0
-    for i in range (len((Json["companies"]))) :
+    for i in range (len((Json["companies"]))-16) :
         tabNamesCompanies.append(Json["companies"][i]['name'])
         tabValue.append(Json["companies"][i]['total_holdings'])
         sum_Holding += Json["companies"][i]['total_holdings']

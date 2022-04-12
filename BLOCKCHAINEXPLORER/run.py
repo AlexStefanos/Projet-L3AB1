@@ -21,7 +21,8 @@ while(close != 1):
    time.sleep(5)
    close = int(input("Si vous voulez fermer le site, tapez 1\n"))
 if(close == 1):
-   processMongoDB.kill()
+   if(monOS == 'Linux' or monOS == 'Darwin'):
+      processMongoDB.kill()
    processDjango.kill()
    if(os.path.exists('datas')):
       for f in pathGlob:
