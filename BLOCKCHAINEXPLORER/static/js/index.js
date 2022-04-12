@@ -31,126 +31,92 @@ function linkBlock(numberBlock){
     var link = document.getElementById('block'.concat(numberBlock)).textContent;
     document.getElementById('block'.concat(numberBlock)).setAttribute("href", "block/".concat(link));
 }
-async function getRefresh(){
-    const api_urlTransac = "http://127.0.0.1:8000/api/Refresh";
-    const responseTransac = await fetch(api_urlTransac);
-    const dataTransac = await responseTransac.json();
-    console.log(dataTransac);
-}
 
-var listeArray = [];
-var LastBlock;
-const request = new XMLHttpRequest();
-request.open("GET", "http://127.0.0.1:8000/api/getLastBlock");
-request.send();
-request.onload = ()=>{
-    if(request.status === 200){
-        var exemple = JSON.parse(request.response);
-        document.getElementById("gasPrice").innerHTML = exemple['GasPrice(Gwei)'];
-        LastBlock = parseInt(exemple['NumberLastBlock']);
-        var b = LastBlock;
 
-        for(let i = 1; i < 16; i++){
-            document.getElementById("block".concat(i)).innerHTML = b;
-            async function getNbTransac(){
-                const api_urlTransac = "http://127.0.0.1:8000/api/getInfoHashBlock/".concat(b.toString());
-                const responseTransac = await fetch(api_urlTransac);
-                const dataTransac = await responseTransac.json();
-                var nbTransac = parseInt(dataTransac.NumberTransactionsInBlock);
-                document.getElementById("NbTransac".concat(i)).innerHTML = "Numbers of transactions : ".concat(nbTransac);
+function loadPage(){
+    var listeArray = [];
+    var LastBlock;
+    const request = new XMLHttpRequest();
+    request.open("GET", "http://127.0.0.1:8000/api/getLastBlock");
+    request.send();
+    request.onload = ()=>{
+        if(request.status === 200){
+            var exemple = JSON.parse(request.response);
+            document.getElementById("gasPrice").innerHTML = exemple['GasPrice(Gwei)'];
+            LastBlock = parseInt(exemple['NumberLastBlock']);
+            var b = LastBlock;
+
+            for(let i = 1; i < 16; i++){
+                document.getElementById("block".concat(i)).innerHTML = b;
+                async function getNbTransac(){
+                    const api_urlTransac = "http://127.0.0.1:8000/api/getInfoHashBlock/".concat(b.toString());
+                    const responseTransac = await fetch(api_urlTransac);
+                    const dataTransac = await responseTransac.json();
+                    var nbTransac = parseInt(dataTransac.NumberTransactionsInBlock);
+                    document.getElementById("NbTransac".concat(i)).innerHTML = "Numbers of transactions : ".concat(nbTransac);
+                }
+                getNbTransac();
+                b = b - 1;
             }
-            getNbTransac();
-            b = b - 1;
-        }
-        const request2 = new XMLHttpRequest();
-        request2.open("GET", "http://127.0.0.1:8000/api/getInfoHashBlock/".concat(LastBlock.toString()));
-        request2.send();
-        request2.onload = ()=>{
-            if(request2.status === 200){
-                var block = JSON.parse(request2.response);
-                var nbTx = parseInt(block['NumberTransactionsInBlock']);
-                var liste =  block['AllTransactionsHash'];
-                listeArray = liste.split(/[\s'',]+/);
-                var listePop = listeArray.pop();
-	            var listeShift = listeArray.shift();
-                async function getData() {
-                    while(nbTx < 16){
-                        LastBlock = LastBlock - 1;
-                        const api_url = "http://127.0.0.1:8000/api/getInfoHashBlock/".concat(bloo.toString());
-                        const response = await fetch(api_url);
-                        const data = await response.json();
-                        var nbTxT = parseInt(data.NumberTransactionsInBlock);
-                        nbTx = nbTx + nbTxT;
-                        var listestr =  data.AllTransactionsHash;
-                        var listeArray2 = listestr.split(/[\s'',]+/);
-                        var listePop2 = listeArray2.pop();
-	                    var listeShift2 = listeArray2.shift();
-                        listeArray = listeArray.concat(listeArray2);
-                    }
-                    for (var i = 1 ; i<16; i++){
-                        document.getElementById("transaction".concat(i)).innerHTML = listeArray[i];
-                    }
-                }
-                if(nbTx < 16){
-                    getData();
-                }
-                else{
-                    for (var i = 1 ; i<16; i++){
-                        document.getElementById("transaction".concat(i)).innerHTML = listeArray[i];
-                    }
-                }
-                /*while(nbTx < 16){
-                    bloo = bloo - 1;
-                    const request3 = new XMLHttpRequest();
-                    request3.open("GET", "http://127.0.0.1:8000/api/getInfoHashBlock/".concat(bloo.toString()));
-                    request3.send();
-                    request3.onload = ()=>{
-                        if(request3.status === 200){
-                            var blockAl = JSON.parse(request3.response);
-                            var nbTxT = parseInt(blockAl['NumberTransactionsInBlock']);
+            const request2 = new XMLHttpRequest();
+            request2.open("GET", "http://127.0.0.1:8000/api/getInfoHashBlock/".concat(LastBlock));
+            request2.send();
+            request2.onload = ()=>{
+                if(request2.status === 200){
+                    var block = JSON.parse(request2.response);
+                    var liste =  block['AllTransactionsHash'];
+                    listeArray = liste.split(/[\s'',]+/);
+                    var listePop = listeArray.pop();
+                    var listeShift = listeArray.shift();
+                    var nbTx = listeArray.length;
+                    async function getData() {
+                        while(nbTx < 16){
+                            LastBlock = LastBlock - 1;
+                            const api_url = "http://127.0.0.1:8000/api/getInfoHashBlock/".concat(LastBlock.toString());
+                            const response = await fetch(api_url);
+                            const data = await response.json();
+                            var nbTxT = parseInt(data.NumberTransactionsInBlock);
                             nbTx = nbTx + nbTxT;
-                            console.log(nbTx);
-                            var listestr =  blockAl['AllTransactionsHash'];
+                            var listestr =  data.AllTransactionsHash;
                             var listeArray2 = listestr.split(/[\s'',]+/);
                             var listePop2 = listeArray2.pop();
-	                        var listeShift2 = listeArray2.shift();
+                            var listeShift2 = listeArray2.shift();
                             listeArray = listeArray.concat(listeArray2);
-                            console.log(listeArray);
                         }
-                        else{
-                            console.log('error ${request3.status}');
+                        for (var i = 1 ; i<16; i++){
+                            document.getElementById("transaction".concat(i)).innerHTML = listeArray[i];
                         }
                     }
-                }*/
-                for (var i = 1 ; i<16; i++){
-                    document.getElementById("transaction".concat(i)).innerHTML = listeArray[i];
+                    console.log(nbTx);
+                    if(nbTx < 16){
+                        getData();
+                    }
+                    else{
+                        for (var i = 1 ; i<16; i++){
+                            document.getElementById("transaction".concat(i)).innerHTML = listeArray[i-1];
+                        }
+                    }
+                }
+                else{
+                    console.log('error ${request2.status}');
                 }
             }
-            else{
-                console.log('error ${request2.status}');
-            }
-            
-            for (let i = 1 ; i<16; i++){
-                document.getElementById("transaction".concat(i)).innerHTML = listeArray[i];
-            }
-
-            //document.getElementById("gasPrice").innerHTML = exemple['GasPrice(Gwei)'];
-        }
-       
-    }
-    else{
-        console.log('error ${request.status}');
-    }
-    const requestEth = new XMLHttpRequest();
-    requestEth.open("GET", "http://127.0.0.1:8000/api/getEthPrice");
-    requestEth.send();
-    requestEth.onload = ()=>{
-        if(requestEth.status === 200){
-            var Price = JSON.parse(requestEth.response);
-            document.getElementById("title").innerHTML = "Ether Price ($): ".concat(Price['USD']);
+        
         }
         else{
             console.log('error ${request.status}');
+        }
+        const requestEth = new XMLHttpRequest();
+        requestEth.open("GET", "http://127.0.0.1:8000/api/getEthPrice");
+        requestEth.send();
+        requestEth.onload = ()=>{
+            if(requestEth.status === 200){
+                var Price = JSON.parse(requestEth.response);
+                document.getElementById("title").innerHTML = "Ether Price ($): ".concat(Price['USD']);
+            }
+            else{
+                console.log('error ${request.status}');
+            }
         }
     }
 }
@@ -161,4 +127,4 @@ async function getRefresh(){
     console.log(dataTransac);
 }
 getRefresh();
-setTimeout(() => { loadPage(); }, 5000);
+setTimeout(() => { loadPage(); }, 3000);
