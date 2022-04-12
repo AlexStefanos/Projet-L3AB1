@@ -3,6 +3,9 @@
     padding: 1%;
     margin: 5%;
     text-align: center;
+}
+
+body{
     background-image: url("background2.png");
 }
 #ethBalance{
@@ -13,7 +16,7 @@
 }
 .adress{
     text-align: center;
-    font-size: 50px;
+    font-size: 30px;
 }
 .btn{
     background-color: #8e63df; /* Green */
@@ -39,6 +42,7 @@
     border: 5px solid rgb(116, 71, 187);
     border-radius: 3px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    background-color: rgba(255, 255, 255, 0.8);
     padding: 8px;
 }
 
@@ -66,4 +70,8 @@ td{
 
 .listTransaction tr:last-of-type {
     border-bottom: 2px solid #6b41b9;
+}
+
+#title{
+    color: white;
 }

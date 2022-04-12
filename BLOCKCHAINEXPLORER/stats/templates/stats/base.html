@@ -24,7 +24,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav ul">
             <li class="nav-item">
-              <a class="nav-link Stats" aria-current="page" href="">Stats</a>
+              <a class="nav-link Stats" aria-current="page" href=""><u>Stats</u></a>
             </li>
             <li class="nav-item">
               <a class="nav-link Documentation" href="../documentation">Documentation</a>
@@ -35,7 +35,7 @@
             <button class="btn" type="button" onclick="search()" >Search</button>
           </form>
         </div>
-        <h2>Blockchain Explorer</h2>
+        <a class="navbar-brand" href="http://127.0.0.1:8000/">Home</a>
       </div>
     </nav>
     {% block body %}
@@ -154,21 +154,21 @@
     </div>
     <br>
     <br>
-    <div class = "ContactBar">
+    <div class = "ContactBar", id="title">
       <div class="container">
-        <div class="row">
-          <div class="col"></div>
-          <div class="col-6">
-            <div class = "Contact">
-              <h5>Contact us :</h5>
+        <div class="row justify-content-md-center">
+            <div class="col col-lg-2"></div>
+            <div class="col-md-auto">
+                <div class = "Contact">
+                    <h5>Contact us :</h5>
+                </div>
             </div>
-          </div>
-          <div class="col"></div>
+            <div class="col col-lg-2"></div>
         </div>
-      </div>
+    </div>
     </div>
     <br>
-    <div class = "ContactBarPersons">
+    <div class = "ContactBarPersons", id="title">
       <div class="container">
         <div class="row">
           <div class="col">
