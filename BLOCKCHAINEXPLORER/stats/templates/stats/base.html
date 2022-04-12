@@ -116,10 +116,20 @@
             </div>
           </div>
         </div>
+        <div class="container">
+          <!-- <div class="row">
+          </div> -->
+          <div class="row">
+            <div class="col-sm"></div>
+            <div class="col-sm">
+              {% autoescape off %}
+              {{ plot_PieCompanies }}
+              {% endautoescape %}
+            </div>
+            <div class="col-sm"></div>
+          </div>
+        </div> 
       </div>
-      {% autoescape off %}
-      {{ plot_PieCompanies }}
-      {% endautoescape %}
     </div>
   </div>
 

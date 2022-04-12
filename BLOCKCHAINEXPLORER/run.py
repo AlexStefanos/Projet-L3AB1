@@ -12,6 +12,7 @@ if(os.path.exists('datas')):
          shutil.rmtree(f)
 if(monOS == 'Linux' or monOS == 'Darwin'):
    processMongoDB = subprocess.Popen(["mongod", "--dbpath", "datas/"], stderr = subprocess.DEVNULL)
+   time.sleep(5)
 processDjango = subprocess.Popen(["python3", "manage.py", "runserver"], stdout = subprocess.DEVNULL, stderr = subprocess.DEVNULL)
 time.sleep(8)
 webbrowser.open('http://127.0.0.1:8000/')
