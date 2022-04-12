@@ -50,6 +50,17 @@ def stats_index(request):
     fig = px.pie(df,values=x_data_PieCompanies, names=y_data_PieCompanies)
     plot_PieCompanies = plot(fig,output_type = 'div')
 
-    return render(request, 'stats/stats_index.html', context={'plot_div': plot_div,'plot_tx' : plot_tx,'plot_TopWallet' : plot_TopWallet,'plot_PieMc' : plot_PieMc, 'plot_PieCompanies' : plot_PieCompanies})
+
+    x_data_SentUsd = dict['x_data_SentUsd']
+    y_data_SentUsd = dict['y_data_SentUsd']
+    fig = px.line(df,x=x_data_SentUsd, y=y_data_SentUsd, labels = {'x' : "Day",'y' : "Amount sent in USD"})
+    plot_SentUsd = plot(fig,output_type = 'div')
+
+    """x_data_DailyNewAddress = dict['x_data_DailyNewAddress']
+    y_data_DailyNewAddress = dict['y_data_DailyNewAddress']
+    fig = px.line(df,x=x_data_DailyNewAddress, y=y_data_DailyNewAddress, labels = {'x' : "Day",'y' : "Daily active address"})"""
+    plot_DailyNewAddress = plot(fig,output_type = 'div')
+
+    return render(request, 'stats/stats_index.html', context={'plot_div': plot_div,'plot_tx' : plot_tx,'plot_TopWallet' : plot_TopWallet,'plot_PieMc' : plot_PieMc, 'plot_PieCompanies' : plot_PieCompanies, 'plot_SentUsd' : plot_SentUsd, 'plot_DailyNewAddress' : plot_DailyNewAddress})
 
 

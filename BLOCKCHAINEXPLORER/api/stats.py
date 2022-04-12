@@ -262,18 +262,50 @@ def getTransactionsOfAddress(address) :
     return AllHashTx
 
 def companiesHoldingInBtc() :
-    url = "https://api.coingecko.com/api/v3/companies/public_treasury/bitcoin"
+    url = "https://api.coingecko.com/api/v3/companies/public_treasury/ethereum"
     response = requests.request("GET", url)
     Json = response.json()
     tabValue = []
     tabNamesCompanies = []
     sum_Holding = 0
-    for i in range (len((Json["companies"]))-16) :
+    for i in range (len((Json["companies"]))) :
         tabNamesCompanies.append(Json["companies"][i]['name'])
         tabValue.append(Json["companies"][i]['total_holdings'])
         sum_Holding += Json["companies"][i]['total_holdings']
 
     return[tabValue,tabNamesCompanies]
+
+def drawValueSentUsd() :
+    urlSentValue = "http://www.tokenview.com:8088/chart/eth/daily_sent_value_usd"
+    response = requests.request("GET", urlSentValue)
+    responseJson = response.json()
+    data = responseJson["data"]
+    tabTransactions = []
+    for i in range(len(data)-15,len(data)-1):
+        for cle,valeur in data[i].items() :
+            tabTransactions.append((cle,valeur))
+    x = []
+    y = []
+    for i in range (14) :
+        x.append(tabTransactions[i][0])
+        y.append(tabTransactions[i][1])
+    return[x,y]
+
+def drawDailyActiveAdress() :
+    urlNewAddress = "http://www.tokenview.com:8088/chart/eth/daily_active_address"
+    response = requests.request("GET", urlNewAddress)
+    responseJson = response.json()
+    data = responseJson["data"]
+    tabTransactions = []
+    for i in range(len(data)-15,len(data)-1):
+        for cle,valeur in data[i].items() :
+            tabTransactions.append((cle,valeur))
+    x = []
+    y = []
+    for i in range (14) :
+        x.append(tabTransactions[i][0])
+        y.append(tabTransactions[i][1])
+    return[x,y]
 
 
 
@@ -297,8 +329,10 @@ if(col.count() == 0) :
             "x_data_PieMc" : None,
             "y_data_PieMc" : None,
             "x_data_PieCompanies" : None,
-            "y_data_PieCompanies" : None}
-
+            "y_data_PieCompanies" : None,
+            'sumTx14d' : None,
+            "x_data_SentUsd": None,
+            "y_data_SentUsd": None}
 
 
     collection = database["DrawChartsCollection"]
@@ -325,6 +359,9 @@ if (drawEthChart() != [dict['x_data_EthPrice'],dict['y_data_EthPrice']]) :
     (x_data_TopWallet,y_data_TopWallet) = drawTopAdressChart()
     (x_data_PieMC,y_data_PieMc) = drawPieTopCrypto()
     (x_data_PieCompanies,y_data_PieCompanies) = companiesHoldingInBtc()
+    sumTx = sum(y_data_EthTxCt)
+    #(x_data_ActiveAdress,y_data_ActiveAdress) = drawDailyActiveAdress()
+    (x_data_SentUsd,y_data_SentUsd) = drawValueSentUsd()
 
     jsonString = {"x_data_EthPrice" : x_data_EthChart, 
             "y_data_EthPrice" : y_data_EthChart,
@@ -335,7 +372,13 @@ if (drawEthChart() != [dict['x_data_EthPrice'],dict['y_data_EthPrice']]) :
             "x_data_PieMc" : x_data_PieMC,
             "y_data_PieMc" : y_data_PieMc,
             "x_data_PieCompanies" : x_data_PieCompanies,
-            "y_data_PieCompanies" : y_data_PieCompanies}
+            "y_data_PieCompanies" : y_data_PieCompanies,
+            'sumTx14d' : sumTx,
+            "x_data_SentUsd": x_data_SentUsd,
+            "y_data_SentUsd": y_data_SentUsd,}
+
+
+
 
     collection = database["DrawChartsCollection"]
     collectionComplete = collection.find()
@@ -350,14 +393,12 @@ if (drawEthChart() != [dict['x_data_EthPrice'],dict['y_data_EthPrice']]) :
 
 def refresh(): 
     blockNumber = getBlockNumber() 
-    blockNumberHex = hex(blockNumber) 
     for i in range(15,-1,-1) : 
         txCount = getTransactionCount(hex(blockNumber-i)) 
         jsonString = {"NumberLastBlock" : str(blockNumber-i),  
                 "GasPrice(Gwei)" : str(gasPrice),  
                 "NbTransactions" : str(txCount)} 
         collection = database["LastBlockCollection"] 
-        collectionComplete = collection.find() 
         with(open('data.json', 'w')) as file: 
             json.dump(jsonString, file) 
         with(open('data.json', 'r')) as file: 
