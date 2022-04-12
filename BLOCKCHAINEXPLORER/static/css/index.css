@@ -141,32 +141,3 @@ body{
   min-width: 300px;
   text-align: right;
 }
-
-.ContactBar{
-  margin-top: 10%;
-}
-
-.Contact{
-  margin-left: 40%;
-  margin-right: 40%;
-}
-
-.NameArt{
-  padding: 5%;
-  display: inline-block;
-}
-
-.NameAle{
-  padding: 4%;
-  display: inline-block;
-}
-
-.NameHan{
-  padding: 4%;
-  display: inline-block;
-}
-
-.NameSam{
-  padding: 5%;
-  display: inline-block;
-}
