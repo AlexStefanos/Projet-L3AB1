@@ -15,6 +15,18 @@
     text-align: center;
     font-size: 50px;
 }
+.btn{
+    background-color: #8e63df; /* Green */
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+  }
 
 
 .listTransaction{
@@ -24,14 +36,14 @@
     font-size: 0.9em;
     font-family: sans-serif;
     min-width: 400px;
-    border: 5px solid rgb(42, 55, 173);
+    border: 5px solid rgb(116, 71, 187);
     border-radius: 3px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
     padding: 8px;
 }
 
 .table{
-    background-color: #2c6ca0;
+    background-color: #793eaf;
     color: #ffffff;
     text-align: left;
 }
@@ -44,14 +56,14 @@ td{
     border-bottom: 1px dotted gray;
 }
 
-.styled-table  tr {
-    border-bottom: 1px solid #dddddd;
+.listTransaction  tr {
+    border-bottom: 1px solid #a19b9bc7;
 }
 
-.styled-table tr:nth-of-type(even) {
-    background-color: #f3f3f3;
+.listTransaction tr:nth-of-type(even) {
+    background-color: #fffbfb;
 }
 
-.styled-table tr:last-of-type {
-    border-bottom: 2px solid #009879;
+.listTransaction tr:last-of-type {
+    border-bottom: 2px solid #6b41b9;
 }
