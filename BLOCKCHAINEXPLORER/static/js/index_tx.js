@@ -23,7 +23,6 @@ request.send();
 request.onload = ()=>{
     if(request.status === 200){
         var Transac = JSON.parse(request.response);
-        console.log(Transac);
         document.getElementById("adress").innerHTML = "Transaction Hash : "+url ;
         document.getElementById("from").innerHTML = "From : " +Transac['from'];
         document.getElementById("to").innerHTML = "To : " +Transac['to'];
@@ -35,7 +34,7 @@ request.onload = ()=>{
             const responsePrice = await fetch(api_urlPrice);
             const dataPrice = await responsePrice.json();
             var value = Math.round((dataPrice.USD * Transac['value']) * 100) / 100;
-            document.getElementById("value").innerHTML = "Value : " +Transac['value']+" Ether ( $".concat(value)+")";
+            document.getElementById("value").innerHTML = "Value : " +Transac['value']+" Ethereum ( $".concat(value)+")";
         }
         getEthPrice();
 

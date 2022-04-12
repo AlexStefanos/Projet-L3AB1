@@ -18,12 +18,14 @@ function search(){
 
 url = window.location.href;
 url = url.slice(28,url.length);
+console.log(url);
 const requestb = new XMLHttpRequest();
 requestb.open("GET", "http://127.0.0.1:8000/api/getBlockBis/"+url);
 requestb.send();
 requestb.onload = ()=>{
     if(requestb.status === 200){
         var block = JSON.parse(requestb.response);
+        console.log(block);
         document.getElementById("hashB").innerHTML = "Block Hash : "+block['hash'];
         document.getElementById("time").innerHTML = "Time : " + block['timestamp'];
         document.getElementById("sizeB").innerHTML = "Size : " +block['size'] + " bytes";
