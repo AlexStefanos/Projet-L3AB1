@@ -101,7 +101,6 @@ def getTransactionFromTo(TransactionHash) :
     json_data = {"jsonrpc":"2.0","method":"eth_getTransactionByHash","params": [TransactionHash],"id":1}
     resp = session.post(url, headers=headers, json = json_data)
     json = resp.json()
-    print(json)
     FromTo = {"from" : json['result']['from'], "to" : json['result']['to'], "gasPrice" : int(json['result']['gasPrice'],16)*10**(-9), "blockNumber":int(json['result']['blockNumber'],16), "value":int(json['result']['value'],16)*10**(-18)}
     return (FromTo)
 
