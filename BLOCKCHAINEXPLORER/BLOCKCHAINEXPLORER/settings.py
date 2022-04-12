@@ -43,7 +43,6 @@ INSTALLED_APPS = [
     'stats.apps.StatsConfig',
     'documentation.apps.DocumentationConfig',
     'block.apps.BlockConfig',
-    'transaction.apps.TransactionConfig',
     'rest_framework',
     'tx.apps.TxConfig',
     'adress.apps.AdressConfig',
