@@ -27,13 +27,13 @@ def stats_index(request):
     del dict['_id']
     x_data_EthPrice = dict['x_data_EthPrice']
     y_data_EthPrice = dict['y_data_EthPrice']
-    fig = px.line(df, x=x_data_EthPrice, y=y_data_EthPrice, labels = {'x' : "Day",'y' : "Price"})
+    fig = px.line(df, x=x_data_EthPrice, y=y_data_EthPrice, labels = {'x' : "Day",'y' : "Price $"})
     plot_div = plot(fig,output_type = 'div')
     
-    x_data_DailyTx = dict['x_data_EthTxCt']
-    y_data_DailyTx = dict['y_data_EthTxCt']
-    fig = px.line(df, x=x_data_DailyTx, y= y_data_DailyTx, labels = {'x' : "Day",'y' : "Amount of Transactions"})
-    plot_tx = plot(fig,output_type = 'div')
+    x_data_LineTVL = dict['x_data_LineTVL']
+    y_data_LineTVL = dict['y_data_LineTVL']
+    fig = px.line(df, x=x_data_LineTVL, y= y_data_LineTVL, labels = {'x' : "Day",'y' : "Ethereum total value locked (in billions of $)"})
+    plot_DefiTVL = plot(fig,output_type = 'div')
     
     x_data_TopWallet = dict['x_data_TopWallet']
     y_data_TopWallet = dict['y_data_TopWallet']
@@ -51,16 +51,12 @@ def stats_index(request):
     plot_PieCompanies = plot(fig,output_type = 'div')
 
 
-    x_data_SentUsd = dict['x_data_SentUsd']
-    y_data_SentUsd = dict['y_data_SentUsd']
-    fig = px.line(df,x=x_data_SentUsd, y=y_data_SentUsd, labels = {'x' : "Day",'y' : "Amount sent in USD"})
-    plot_SentUsd = plot(fig,output_type = 'div')
 
-    """x_data_DailyNewAddress = dict['x_data_DailyNewAddress']
-    y_data_DailyNewAddress = dict['y_data_DailyNewAddress']
-    fig = px.line(df,x=x_data_DailyNewAddress, y=y_data_DailyNewAddress, labels = {'x' : "Day",'y' : "Daily active address"})"""
-    plot_DailyNewAddress = plot(fig,output_type = 'div')
+    NamePieDefi = dict['NamePieDefi']
+    ValuesPieDefi = dict['ValuesPieDefi']
+    fig = px.pie(df,values=ValuesPieDefi, names = NamePieDefi)
+    plot_PieDefi = plot(fig,output_type = 'div')
 
-    return render(request, 'stats/stats_index.html', context={'plot_div': plot_div,'plot_tx' : plot_tx,'plot_TopWallet' : plot_TopWallet,'plot_PieMc' : plot_PieMc, 'plot_PieCompanies' : plot_PieCompanies, 'plot_SentUsd' : plot_SentUsd, 'plot_DailyNewAddress' : plot_DailyNewAddress})
+    return render(request, 'stats/stats_index.html', context={'plot_div': plot_div,'plot_DefiTVL' : plot_DefiTVL,'plot_TopWallet' : plot_TopWallet,'plot_PieMc' : plot_PieMc, 'plot_PieCompanies' : plot_PieCompanies,'plot_PieDefi' : plot_PieDefi})
 
 

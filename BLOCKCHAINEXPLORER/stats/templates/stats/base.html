@@ -48,7 +48,7 @@
         <div class="col">
           <div class="card">
             <div class="card-header">
-              Ethereum price in the last 14 days 
+              Ethereum price in the last 365 days 
             </div>
             <div class="card-body">
               <blockquote class="blockquote mb-0">
@@ -66,16 +66,16 @@
         <div class="col">
           <div class="card">
             <div class="card-header">
-              Ethereum transaction history in the last 14 days 
+              Ethereum total value locked since the beginning of Defi (decentralized finance)
             </div>
             <div class="card-body">
               <blockquote class="blockquote mb-0">
                 <p></p>
                 {% autoescape off %}
-                {{ plot_tx }}
+                {{ plot_DefiTVL}}
                 {% endautoescape %}
                 <br>
-                <footer class="blockquote-footer">Someone famous in <cite title="Source Title">Source Title</cite></footer>
+                <footer class="blockquote-footer">https://api.llama.fi/charts/Ethereum</footer>
                 <br>
               </blockquote>
             </div>
@@ -130,7 +130,7 @@
                 {{ plot_PieCompanies }}
                 {% endautoescape %}
                 <br>
-                <footer class="blockquote-footer">https://services.tokenview.com/vipapi/address/richrange/eth/1/10?apikey=ft7EW5mB9j7EPk3hiRUt</footer>
+                <footer class="blockquote-footer">https://api.coingecko.com/api/v3/companies/public_treasury/ethereum</footer>
                 <br>
               </blockquote>
             </div>
@@ -139,16 +139,16 @@
         <div class="col">
           <div class="card">
             <div class="card-header">
-              Daily amount send in USD in the last 14 days on the Ethereum Blockchain 
+              Largest decentralized applications on Ethereum by total value locked
             </div>
             <div class="card-body">
               <blockquote class="blockquote mb-0">
                 <p></p>
                 {% autoescape off %}
-                {{ plot_SentUsd }}
+                {{ plot_PieDefi }}
                 {% endautoescape %}
                 <br>
-                <footer class="blockquote-footer">https://services.tokenview.com/vipapi/address/richrange/eth/1/10?apikey=ft7EW5mB9j7EPk3hiRUt</footer>
+                <footer class="blockquote-footer">https://api.llama.fi/protocols</footer>
                 <br>
               </blockquote>
             </div>

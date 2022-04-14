@@ -21,14 +21,12 @@ sns.set()
 url = "https://api.zmok.io/mainnet/lcf0jmfdvhdi3ezt"
 url2 = "https://api.zmok.io/mainnet/uoeoajazlmlsvslh"
 url3 = "https://api.zmok.io/mainnet/swmxlmavvfhtdeyl"
-urlHistoryTxCnt = "http://www.tokenview.com:8088/chart/eth/daily_tx_cnt"
 apiKey = "11d0e28c6c04190b58fd6abf1f1ad55792e34e93e61c784e5b33c836efb17f1a"
 apiKeyEthScan = "BC9GC2BCWXHFF4BPZYGY6RV5JED5HGB72A"
 urlPrix = "https://min-api.cryptocompare.com/data/price?fsym=ETH&tsyms=USD&apikey=" + apiKey
-urlHisto = "https://min-api.cryptocompare.com/data/v2/histoday?fsym=ETH&tsym=USD&limit=14&apikey=" + apiKey
+urlHisto = "https://min-api.cryptocompare.com/data/v2/histoday?fsym=ETH&tsym=USD&limit=365&apikey=" + apiKey
 headers = CaseInsensitiveDict()
 headers["Content-Type"] = "application/json"
-adress = "0x9c5083dd4838e120dbeac44c052179692aa5dac5"
 notReadyBegin = True
 notReadyEnd = True
 
@@ -118,113 +116,22 @@ def getAllTransactionAdress(Adress) :
     AllTransactionsWallet = {"AllTransactions" : tabInfoWallet}
     return (AllTransactionsWallet)
 
-
-"""plt.plot(drawEthChart())
-plt.ylabel('ETH Price')
-plt.show() 
-Enlever les guillemets pour tracer la courbe de l'ETH sur 14 jours"""
-# print(getPriceEth()) renvoie le prix de l'ETH
-# print(getAllTransactionAdress(Adress)) renvoie sous un dictionnaire l'ensemble des Hash des transactions d'une adresse 
-
-"""blockNumber = getBlockNumber()
-blockNumberHex = hex(blockNumber)
-numberOfTransactions = getTransactionCount(blockNumberHex)
-InfoBlock = getBlock(blockNumberHex)"""
-
-
 blockNumber = getBlockNumber()
 blockNumberHex = hex(blockNumber)
 
 print("The number of the last block is : " + str(blockNumber))
-"""print("The actual gas price is : " + str(getGasPrice()) + " Gwei") 
-print("The ETH balance of the adress " + adress + " is : " + str(getBalanceEth(adress)))
-print("The number of transactions in the block number " + str(blockNumber) + " is : " + str(numberOfTransactions))"""
-
-
-"""tabJsonBeginningValue = []
-tabJsonMiddleValue = []
-tabJsonEndValue = []
-tabJsonBeginningHash = []
-tabJsonMiddleHash = []
-tabJsonEndHash = []
-
-def f1():
-    for i in range(0,int(numberOfTransactions/3)) :
-        #tabJsonBeginningValue.append(getTransactionInfo(InfoBlock[i],url))
-        tabJsonBeginningHash.append(InfoBlock[i])
-        
- 
-def f2():
-    for i in range(int(numberOfTransactions/3),int(2*numberOfTransactions/3)) :
-        #tabJsonMiddleValue.append(getTransactionInfo(InfoBlock[i],url2))
-        tabJsonMiddleHash.append(InfoBlock[i])
-
-
-def f3():
-    for i in range(int(2*numberOfTransactions/3),numberOfTransactions) :
-        #tabJsonEndValue.append(getTransactionInfo(InfoBlock[i],url3))
-        tabJsonEndHash.append(InfoBlock[i])
- 
-
-t1 = threading.Thread(None,target=f1)
-t2 = threading.Thread(None,target=f2)
-t3 = threading.Thread(None,target = f3)
-
-t1.start()
-t2.start()
-t3.start()
-
-debut = time.time()
-
-while (t1.is_alive() or t2.is_alive() or t3.is_alive()) :
-    time.sleep(0.5)
-fin = time.time()
-
-print(fin-debut)
-
-#tabJsonBeginningValue.extend(tabJsonMiddleValue)
-#tabJsonBeginningValue.extend(tabJsonEndValue)"""
-
-"""tabJsonBeginningHash.extend(tabJsonMiddleHash)
-tabJsonBeginningHash.extend(tabJsonEndHash)
-
-jsonString = {"NumberLastBlock" : str(blockNumber), 
-            "GasPrice(Gwei)" : str(getGasPrice()), 
-            "NbTransactions" : str(numberOfTransactions)}"""
-# Json = json.dumps(jsonString)
-# print(Json)
-
-"""jsonStringHash = {"NumberBlock" : str(blockNumber), 
-                "NumberTransactionsInBlock" : str(numberOfTransactions),
-                "AllTransactionsHash" : str(tabJsonBeginningHash)}"""
-                
 
 
 def drawEthChart() :
     responseHisto = requests.post(urlHisto).json()
     x = []
     y = []
-    for i in range (14) :
+    for i in range (365) :
         y.append(responseHisto['Data']['Data'][i]['open'])
         epoch_time = responseHisto['Data']['Data'][i]['time']
         x.append(time.strftime('%Y-%m-%d', time.localtime(epoch_time)))
     return [x,y]
 
-def drawTransactionsChart() : 
-    response = requests.request("GET", urlHistoryTxCnt)
-    responseJson = response.json()
-    data = responseJson["data"]
-    tabTransactions = []
-    for i in range(len(data)-15,len(data)-1):
-        for cle,valeur in data[i].items() :
-            tabTransactions.append((cle,valeur))
-    x = []
-    y = []
-    for i in range (14) :
-        x.append(tabTransactions[i][0])
-        y.append(tabTransactions[i][1])
-
-    return [x,y]
 
 def drawTopAdressChart() :
     data = {'code': 1, 'msg': '成功', 'data': [{'addr': '0x00000000219ab540356cbb839cbe05303d7705fa', 'balance': 11352626.000069, 'txCnt': 34838}, {'addr': '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2', 'balance': 6340481.331016232, 'txCnt': 3973918}, {'addr': '0xda9dfa130df4de4673b89022ee50ff26f6ea73cf', 'balance': 2113030.0012, 'txCnt': 64}, {'addr': '0xbe0eb53f46cd790cd13851d5eff43d12404d33e8', 'balance': 1996008.2837798258, 'txCnt': 1088}, {'addr': '0x73bceb1cd57c711feac4224d062b0f6ff338501e', 'balance': 1923504.538509494, 'txCnt': 480}, {'addr': '0x9bf4001d307dfd62b26a2f1307ee0c0307632d59', 'balance': 1490000.0180927091, 'txCnt': 103}, {'addr': '0x4ddc2d193948926d02f9b1fe9e1daa0718270ed5', 'balance': 1028541.690326043, 'txCnt': 25020}, {'addr': '0x61edcdf5bb737adffe5043706e7c5bb1f1a56eea', 'balance': 929498.95358134, 'txCnt': 336}, {'addr': '0xdc24316b9ae028f1497c275eb9192a3ea0f67022', 'balance': 784665.045977826, 'txCnt': 12732}, {'addr': '0x011b6e24ffb0b5f5fcc564cf4183c5bbbc96d515', 'balance': 593103.3479250012, 'txCnt': 50}]}
@@ -261,7 +168,7 @@ def getTransactionsOfAddress(address) :
     AllHashTx = {"AllHashTx" : tabHash}
     return AllHashTx
 
-def companiesHoldingInBtc() :
+def companiesHoldingInEth() :
     url = "https://api.coingecko.com/api/v3/companies/public_treasury/ethereum"
     response = requests.request("GET", url)
     Json = response.json()
@@ -291,21 +198,33 @@ def drawValueSentUsd() :
         y.append(tabTransactions[i][1])
     return[x,y]
 
-def drawDailyActiveAdress() :
-    urlNewAddress = "http://www.tokenview.com:8088/chart/eth/daily_active_address"
-    response = requests.request("GET", urlNewAddress)
+
+def drawDefiTvl() :
+    urlTvlHistoryEth = "https://api.llama.fi/charts/Ethereum"
+    response = requests.request("GET", urlTvlHistoryEth)
     responseJson = response.json()
-    data = responseJson["data"]
-    tabTransactions = []
-    for i in range(len(data)-15,len(data)-1):
-        for cle,valeur in data[i].items() :
-            tabTransactions.append((cle,valeur))
     x = []
     y = []
-    for i in range (14) :
-        x.append(tabTransactions[i][0])
-        y.append(tabTransactions[i][1])
+    for i in range(0,len(responseJson)-1) :
+        epoch_time =  (int(responseJson[i]["date"])) 
+        x.append(datetime.utcfromtimestamp(epoch_time).strftime('%Y-%m-%d'))
+        y.append(responseJson[i]['totalLiquidityUSD'])
     return[x,y]
+
+def drawDefiPie() :
+    urlProtocols = "https://api.llama.fi/protocols"
+    response = requests.request("GET", urlProtocols)
+    responseJson = response.json()
+    tmp = 0
+    xNom=[]
+    yTVL = []
+    while(tmp<40) :
+        while ("Ethereum" not in responseJson[tmp]['chains'] ) :
+            tmp+= 1
+        xNom.append(responseJson[tmp]['name'])
+        yTVL.append(responseJson[tmp]['chainTvls']['Ethereum'])
+        tmp+=1
+    return[xNom,yTVL]
 
 
 
@@ -316,23 +235,18 @@ col = database["DrawChartsCollection"]
 
 if(col.count() == 0) :
 
-
-
-
-
     jsonString = {"x_data_EthPrice" : "T", 
             "y_data_EthPrice" : None,
-            "x_data_EthTxCt" : None,
-            "y_data_EthTxCt" : None,
+            "x_data_TvlHistory" : None,
+            "y_data_TvlHistory" : None,
             "x_data_TopWallet" : None,
             "y_data_TopWallet" : None,
             "x_data_PieMc" : None,
             "y_data_PieMc" : None,
             "x_data_PieCompanies" : None,
             "y_data_PieCompanies" : None,
-            'sumTx14d' : None,
-            "x_data_SentUsd": None,
-            "y_data_SentUsd": None}
+            "x_data_PieTvl": None,
+            "y_data_PieTvl": None}
 
 
     collection = database["DrawChartsCollection"]
@@ -355,27 +269,25 @@ for data in x:
 if (drawEthChart() != [dict['x_data_EthPrice'],dict['y_data_EthPrice']]) :
 
     (x_data_EthChart,y_data_EthChart) = drawEthChart()
-    (x_data_EthTxCt,y_data_EthTxCt) = drawTransactionsChart()
+    (x_data_LineTVL,y_data_LineTVL) = drawDefiTvl()
     (x_data_TopWallet,y_data_TopWallet) = drawTopAdressChart()
     (x_data_PieMC,y_data_PieMc) = drawPieTopCrypto()
-    (x_data_PieCompanies,y_data_PieCompanies) = companiesHoldingInBtc()
-    sumTx = sum(y_data_EthTxCt)
-    #(x_data_ActiveAdress,y_data_ActiveAdress) = drawDailyActiveAdress()
-    (x_data_SentUsd,y_data_SentUsd) = drawValueSentUsd()
+    (x_data_PieCompanies,y_data_PieCompanies) = companiesHoldingInEth()
+    (NamePieDefi,ValuesPieDefi) = drawDefiPie()
+    
 
     jsonString = {"x_data_EthPrice" : x_data_EthChart, 
             "y_data_EthPrice" : y_data_EthChart,
-            "x_data_EthTxCt" : x_data_EthTxCt,
-            "y_data_EthTxCt" : y_data_EthTxCt,
+            "x_data_LineTVL" : x_data_LineTVL,
+            "y_data_LineTVL" : y_data_LineTVL,
             "x_data_TopWallet" : x_data_TopWallet,
             "y_data_TopWallet" : y_data_TopWallet,
             "x_data_PieMc" : x_data_PieMC,
             "y_data_PieMc" : y_data_PieMc,
             "x_data_PieCompanies" : x_data_PieCompanies,
             "y_data_PieCompanies" : y_data_PieCompanies,
-            'sumTx14d' : sumTx,
-            "x_data_SentUsd": x_data_SentUsd,
-            "y_data_SentUsd": y_data_SentUsd,}
+            "NamePieDefi" : NamePieDefi,
+            "ValuesPieDefi" : ValuesPieDefi}
 
 
 
