@@ -46,6 +46,16 @@ function loadPage(){
             LastBlock = parseInt(exemple['NumberLastBlock']);
             var b = LastBlock;
 
+            async function getTransac24h(){
+                const api_urlTransac24h = "https://api.blockchair.com/ethereum/stats";
+                const responseTransac24h = await fetch(api_urlTransac24h);
+                const dataTransac24h = await responseTransac24h.json();
+                var nbTransac24h = parseInt(dataTransac24h.data.transactions_24h);
+                console.log(dataTransac24h.data);
+                document.getElementById("24h").innerHTML = "".concat(nbTransac24h);
+            }
+            getTransac24h();
+
             for(let i = 1; i < 16; i++){
                 document.getElementById("block".concat(i)).innerHTML = b;
                 async function getNbTransac(){
@@ -84,10 +94,9 @@ function loadPage(){
                             listeArray = listeArray.concat(listeArray2);
                         }
                         for (var i = 1 ; i<16; i++){
-                            document.getElementById("transaction".concat(i)).innerHTML = listeArray[i];
+                            document.getElementById("transaction".concat(i)).innerHTML = listeArray[i-1];
                         }
                     }
-                    console.log(nbTx);
                     if(nbTx < 16){
                         getData();
                     }
@@ -112,7 +121,7 @@ function loadPage(){
         requestEth.onload = ()=>{
             if(requestEth.status === 200){
                 var Price = JSON.parse(requestEth.response);
-                document.getElementById("title").innerHTML = "Ether Price ($): ".concat(Price['USD']);
+                document.getElementById("ethPrice").innerHTML = "$".concat(Price['USD']);
             }
             else{
                 console.log('error ${request.status}');
@@ -127,4 +136,4 @@ async function getRefresh(){
     console.log(dataTransac);
 }
 getRefresh();
-setTimeout(() => { loadPage(); }, 3000);
+setTimeout(() => { loadPage(); }, 3500);
