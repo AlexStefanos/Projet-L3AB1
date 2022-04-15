@@ -21,7 +21,6 @@ function search(){
 
 url = window.location.href;
 url = url.slice(28,url.length);
-console.log(url);
 const requestb = new XMLHttpRequest();
 requestb.open("GET", "http://127.0.0.1:8000/api/getBlockBis/"+url);
 requestb.send();
@@ -35,14 +34,7 @@ requestb.onload = ()=>{
         document.getElementById("minerB").innerHTML = "Mined by : " + block['miner'];
         document.getElementById("dif").innerHTML = "Difficulty : " + block['difficulty'];
         document.getElementById("tot").innerHTML = " Total Difficulty : " + block['total difficulty'];
-        console.log(url);
-        async function getNbTransac(){
-            const api_url = "http://127.0.0.1:8000/api/getInfoHashBlock/"+url;
-            const response = await fetch(api_url);
-            const data = await response.json();
-            document.getElementById("nbTransacB").innerHTML = "Number of transactions : " + data.NumberTransactionsInBlock;
-        }
-        getNbTransac();
+        document.getElementById("nbTransacB").innerHTML = "Number of transactions : "+block['numberTransaction'];
 
     }
     else{

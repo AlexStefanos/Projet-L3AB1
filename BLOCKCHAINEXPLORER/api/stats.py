@@ -76,9 +76,9 @@ def getBlock(BlockNumber) :
 def getBlockBis(BlockNumber) : 
     json_data = {"jsonrpc":"2.0","method":"eth_getBlockByNumber","params": [BlockNumber,False],"id":1} 
     resp = session.post(url, headers=headers, json = json_data) 
-    json = resp.json() 
+    json = resp.json()
     epoch_time =  (int(json['result']['timestamp'],16)) 
-    result = { "hash": json['result']['hash'], "difficulty" : int(json['result']['difficulty'],16), "total difficulty" : int(json['result']['totalDifficulty'],16) ,"miner" : json['result']['miner'], "timestamp" : datetime.utcfromtimestamp(epoch_time).strftime('%Y-%m-%d %H:%M:%S'), "size" : int(json['result']['size'],16)} 
+    result = { "hash": json['result']['hash'], "difficulty" : int(json['result']['difficulty'],16), "total difficulty" : int(json['result']['totalDifficulty'],16) ,"miner" : json['result']['miner'], "timestamp" : datetime.utcfromtimestamp(epoch_time).strftime('%Y-%m-%d %H:%M:%S'), "size" : int(json['result']['size'],16), "numberTransaction" : getTransactionCount(BlockNumber)} 
     return (result) 
 
 def getTransactionCount(blockNumber) :

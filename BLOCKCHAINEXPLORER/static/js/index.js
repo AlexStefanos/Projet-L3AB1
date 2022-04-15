@@ -46,6 +46,15 @@ function loadPage(){
             LastBlock = parseInt(exemple['NumberLastBlock']);
             var b = LastBlock;
 
+            async function getEthPrice(){
+                const api_urlPrice = "http://127.0.0.1:8000/api/getEthPrice";
+                const responsePrice = await fetch(api_urlPrice);
+                const dataPrice = await responsePrice.json();
+                var Price = parseInt(dataPrice.USD);
+                document.getElementById("ethPrice").innerHTML = "$".concat(Price);
+            }
+            getEthPrice();
+
             async function getTransac24h(){
                 const api_urlTransac24h = "https://api.blockchair.com/ethereum/stats";
                 const responseTransac24h = await fetch(api_urlTransac24h);
@@ -115,18 +124,6 @@ function loadPage(){
         else{
             console.log('error ${request.status}');
         }
-        const requestEth = new XMLHttpRequest();
-        requestEth.open("GET", "http://127.0.0.1:8000/api/getEthPrice");
-        requestEth.send();
-        requestEth.onload = ()=>{
-            if(requestEth.status === 200){
-                var Price = JSON.parse(requestEth.response);
-                document.getElementById("ethPrice").innerHTML = "$".concat(Price['USD']);
-            }
-            else{
-                console.log('error ${request.status}');
-            }
-        }
     }
 }
 async function getRefresh(){
@@ -136,4 +133,4 @@ async function getRefresh(){
     console.log(dataTransac);
 }
 getRefresh();
-setTimeout(() => { loadPage(); }, 3500);
+setTimeout(() => { loadPage(); }, 2000);
