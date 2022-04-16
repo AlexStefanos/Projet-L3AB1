@@ -1,6 +1,8 @@
 body{
-  background-image: url("background2.png");
+  background-image: var(--background);
 }
+
+
 
 .listTransaction th,
 .listTransaction td{
@@ -8,7 +10,7 @@ body{
 }
 
 .listTransaction  tr {
-  border-bottom: 1px solid #dddddd;
+  border-bottom: 1px solid #ffffff;
 }
 
 .listTransaction tr:nth-of-type(even) {

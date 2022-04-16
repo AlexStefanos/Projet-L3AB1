@@ -87,4 +87,8 @@ def Refresh(request):
     dict = { "Refresh" : "OK"}
     return Response(dict)
         
-
+@api_view(['GET'])
+def getAllTransactionsBlock(request,pk =None):
+    block = hex(pk)
+    dict = {"allTransactions" : stats.getBlock(block)}
+    return Response(dict)

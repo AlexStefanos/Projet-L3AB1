@@ -1,0 +1,87 @@
+body{
+    background-image: url("background2.png");
+}
+
+
+.bottom{
+    padding-top: 50%;
+}
+
+h1{
+    font-size: 30px;
+}
+
+h2{
+    font-size: 15px;
+}
+
+h3{
+    font-size : 13px;
+}
+.content{
+    box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.15);
+    padding: 1%;
+    margin: 5%;
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.3);
+}
+.btn{
+    background-color: #8e63df; /* Green */
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+
+#title{
+    color: white;
+}
+
+.listTransaction{
+    margin-left: auto;
+    margin-right: auto;
+    border-collapse: collapse;
+    font-size: 0.9em;
+    font-family: sans-serif;
+    min-width: 400px;
+    border: 5px solid rgb(116, 71, 187);
+    border-radius: 3px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 8px;
+}
+
+.adress{
+    text-align: center;
+}
+
+.table{
+    background-color: #793eaf;
+    color: #ffffff;
+    text-align: center;
+}
+.listTransaction th,
+.listTransaction td{
+    padding: 12px 15px;
+}
+
+td{
+    border-bottom: 1px dotted gray;
+}
+
+.listTransaction  tr {
+    border-bottom: 1px solid #a19b9bc7;
+}
+
+.listTransaction tr:nth-of-type(even) {
+    background-color: #fffbfb;
+}
+
+.listTransaction tr:last-of-type {
+    border-bottom: 2px solid #6b41b9;
+}

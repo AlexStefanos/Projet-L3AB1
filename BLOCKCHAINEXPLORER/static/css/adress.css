@@ -4,20 +4,14 @@
     margin: 5%;
     text-align: center;
     background: rgba(255, 255, 255, 0.5);
-}
+}   
 
 body{
     background-image: url("background2.png");
 }
-#ethBalance{
-    font-size: 30px;
-}
-#value{
-    font-size: 30px;
-}
+
 .adress{
     text-align: center;
-    font-size: 30px;
 }
 .btn{
     background-color: #8e63df; /* Green */
@@ -47,10 +41,12 @@ body{
     padding: 8px;
 }
 
+
+
 .table{
     background-color: #793eaf;
     color: #ffffff;
-    text-align: left;
+    text-align: center;
 }
 .listTransaction th,
 .listTransaction td{

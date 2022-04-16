@@ -18,7 +18,35 @@ function search(){
 }
 
 function changeColor(){
-    document.getElementsByClassName("bottonPage").style.background = "blue";
+    const body = document.body;
+    if(body.classList.contains('dark')){
+        localStorage.removeItem('dark');
+        localStorage.removeItem('light');
+        localStorage.setItem('dark', "dark mode");
+        body.classList.add('light');
+        body.classList.remove('dark');
+        document.getElementById("btn").innerHTML = "dark mode";
+        document.documentElement.style.setProperty('--background', 'url("background2.png")');
+        console.log("hello");
+
+    }
+    else{
+        localStorage.removeItem('dark');
+        localStorage.removeItem('light');
+        localStorage.setItem('dark', "light mode");
+        body.classList.add('dark');
+        body.classList.remove('light');
+        document.getElementById("btn").innerHTML= "light mode";
+        document.documentElement.style.setProperty('--background', 'url("background3.png")');
+        console.log("coucou");
+    }
+}
+
+function onLoadChangeColor(){
+    console.log(localStorage);
+    if(localStorage.getItem('dark')){
+        document.body.classList.add('dark');
+    }
 }
 
 

@@ -11,4 +11,5 @@ urlpatterns = [
     path('getAllTransactionsAdress/<str:pk>',views.getAllTransactionsAdress),
     path('getBlockBis/<int:pk>',views.getBlockBis),
     path('Refresh',views.Refresh),
+    path('getAllTransactionsBlock/<int:pk>',views.getAllTransactionsBlock),
 ]
