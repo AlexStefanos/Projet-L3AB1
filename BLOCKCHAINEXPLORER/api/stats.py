@@ -88,9 +88,10 @@ def getTransactionCount(blockNumber) :
     result = int(json['result'],16)
     return (result)
 
-def getTransactionInfo(TransactionHash,Url) :
+def getTransactionInfo(TransactionHash) :
+    url = "https://api.zmok.io/mainnet/lcf0jmfdvhdi3ezt"
     json_data = {"jsonrpc":"2.0","method":"eth_getTransactionByHash","params": [TransactionHash],"id":1}
-    resp = session.post(Url, headers=headers, json = json_data)
+    resp = session.post(url, headers=headers, json = json_data)
     json = resp.json()
     valueInEth = int(json['result']['value'],16)*10**(-18)
     return valueInEth
