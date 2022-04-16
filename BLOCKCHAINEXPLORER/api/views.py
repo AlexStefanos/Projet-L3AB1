@@ -12,9 +12,9 @@ def getLastBlock(request):
 
     # Collection Name
     col = db["LastBlockCollection"]
-
-    x = col.find()
-
+    
+    x = col.find().sort("NumberLastBlock") 
+    list = []
     for data in x:
         dict = data.copy()
     del dict['_id']

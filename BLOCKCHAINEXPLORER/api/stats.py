@@ -307,37 +307,81 @@ if (drawEthChart() != [dict['x_data_EthPrice'],dict['y_data_EthPrice']]) :
     else:
         collection.insert_one(file_data)
 
-def refresh(): 
-    blockNumber = getBlockNumber() 
-    for i in range(15,-1,-1) : 
-        txCount = getTransactionCount(hex(blockNumber-i)) 
-        jsonString = {"NumberLastBlock" : str(blockNumber-i),  
+def process_one(blockNumber):
+    i = 15
+    while(i > 10):
+        txCount = getTransactionCount(hex(blockNumber)) 
+        jsonString = {"NumberLastBlock" : str(blockNumber),  
                 "GasPrice(Gwei)" : str(gasPrice),  
                 "NbTransactions" : str(txCount)} 
         collection = database["LastBlockCollection"] 
-        with(open('data.json', 'w')) as file: 
-            json.dump(jsonString, file) 
-        with(open('data.json', 'r')) as file: 
-            file_data = json.load(file) 
-        if(isinstance(file_data, list)): 
-            collection.insert_many(file_data) 
-        else: 
-            collection.insert_one(file_data) 
-     
-        InfoBlock = getBlock(hex(blockNumber-i)) 
-        jsonStringHash = {"NumberBlock" : str(blockNumber-i),  
+        collection.insert_one(jsonString)
+
+        InfoBlock = getBlock(hex(blockNumber)) 
+        jsonStringHash = {"NumberBlock" : str(blockNumber),  
                     "NumberTransactionsInBlock" : str(txCount), 
                     "AllTransactionsHash" : str(InfoBlock)} 
-        collection = database["InfoHashBlock"] 
-        collectionComplete = collection.find() 
-        with(open('data.json', 'w')) as file: 
-            json.dump(jsonStringHash, file) 
-        with(open('data.json', 'r')) as file: 
-            file_data = json.load(file) 
-        if(isinstance(file_data, list)): 
-            collection.insert_many(file_data) 
-        else: 
-            collection.insert_one(file_data) 
-         
- 
+        collection = database["InfoHashBlock"]
+        collection.insert_one(jsonStringHash)
+        blockNumber = blockNumber - 1
+        i = i - 1 
+
+def process_two(blockNumber):
+    i = 10
+    blockNumber = blockNumber - 5
+    while(i > 5):
+        txCount = getTransactionCount(hex(blockNumber)) 
+        jsonString = {"NumberLastBlock" : str(blockNumber),  
+                "GasPrice(Gwei)" : str(gasPrice),  
+                "NbTransactions" : str(txCount)} 
+        collection = database["LastBlockCollection"] 
+        collection.insert_one(jsonString)
+
+        InfoBlock = getBlock(hex(blockNumber)) 
+        jsonStringHash = {"NumberBlock" : str(blockNumber),  
+                    "NumberTransactionsInBlock" : str(txCount), 
+                    "AllTransactionsHash" : str(InfoBlock)} 
+        collection = database["InfoHashBlock"]
+        collection.insert_one(jsonStringHash)
+        blockNumber = blockNumber - 1
+        i = i - 1 
+
+def process_three(blockNumber):
+    i = 5
+    blockNumber = blockNumber - 10
+    while(i > 0):
+        txCount = getTransactionCount(hex(blockNumber)) 
+        jsonString = {"NumberLastBlock" : str(blockNumber),  
+                "GasPrice(Gwei)" : str(gasPrice),  
+                "NbTransactions" : str(txCount)} 
+        collection = database["LastBlockCollection"] 
+        collection.insert_one(jsonString)
+
+        InfoBlock = getBlock(hex(blockNumber)) 
+        jsonStringHash = {"NumberBlock" : str(blockNumber),  
+                    "NumberTransactionsInBlock" : str(txCount), 
+                    "AllTransactionsHash" : str(InfoBlock)} 
+        collection = database["InfoHashBlock"]
+        collection.insert_one(jsonStringHash)
+        blockNumber = blockNumber - 1
+        i = i - 1 
+
+def refresh(): 
+    start_time = time.time()
+    blockNumber = getBlockNumber() 
+    t1 = threading.Thread(target=process_one, args=[blockNumber])
+    t2 = threading.Thread(target=process_two, args=[blockNumber])
+    t3 = threading.Thread(target=process_three, args=[blockNumber])
+
+    t1.start()
+    t2.start()
+    t3.start()
+
+    t1.join()
+    t2.join()
+    t3.join()
+    print("--- %s seconds ---" % (time.time() - start_time))
+
+
+
 refresh()

@@ -45,6 +45,7 @@ function loadPage(){
             document.getElementById("gasPrice").innerHTML = exemple['GasPrice(Gwei)'];
             LastBlock = parseInt(exemple['NumberLastBlock']);
             var b = LastBlock;
+            console.log(LastBlock);
 
             async function getEthPrice(){
                 const api_urlPrice = "http://127.0.0.1:8000/api/getEthPrice";
@@ -60,7 +61,6 @@ function loadPage(){
                 const responseTransac24h = await fetch(api_urlTransac24h);
                 const dataTransac24h = await responseTransac24h.json();
                 var nbTransac24h = parseInt(dataTransac24h.data.transactions_24h);
-                console.log(dataTransac24h.data);
                 document.getElementById("24h").innerHTML = "".concat(nbTransac24h);
             }
             getTransac24h();
@@ -133,4 +133,4 @@ async function getRefresh(){
     console.log(dataTransac);
 }
 getRefresh();
-setTimeout(() => { loadPage(); }, 2000);
+setTimeout(() => { loadPage(); }, 1550);

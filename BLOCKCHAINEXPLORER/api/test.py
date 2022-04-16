@@ -77,5 +77,3 @@ for i in range (14) :
 
 fig = px.line(x=x,y=y)
 plot(fig)
-
-
