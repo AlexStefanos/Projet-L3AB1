@@ -1,8 +1,8 @@
 body{
-    background-image: url("background2.png");
+    background-image: var(--background);
 }
 .btn{
-    background-color: #8e63df; /* Green */
+    background-color: var(--color); /* Green */
     border: none;
     color: white;
     padding: 10px 20px;

@@ -20,32 +20,45 @@ function search(){
 function changeColor(){
     const body = document.body;
     if(body.classList.contains('dark')){
-        localStorage.removeItem('dark');
-        localStorage.removeItem('light');
-        localStorage.setItem('dark', "dark mode");
+        localStorage.setItem('darkMode', "off");
         body.classList.add('light');
         body.classList.remove('dark');
         document.getElementById("btn").innerHTML = "dark mode";
         document.documentElement.style.setProperty('--background', 'url("background2.png")');
-        console.log("hello");
-
+        document.documentElement.style.setProperty('--color', '#8e63df');
     }
     else{
-        localStorage.removeItem('dark');
-        localStorage.removeItem('light');
-        localStorage.setItem('dark', "light mode");
+        localStorage.setItem('darkMode', "on");
         body.classList.add('dark');
         body.classList.remove('light');
         document.getElementById("btn").innerHTML= "light mode";
         document.documentElement.style.setProperty('--background', 'url("background3.png")');
-        console.log("coucou");
+        document.documentElement.style.setProperty('--color', '#5e5d61');
     }
 }
 
 function onLoadChangeColor(){
-    console.log(localStorage);
-    if(localStorage.getItem('dark')){
-        document.body.classList.add('dark');
+    const body = document.body;
+    if(localStorage.getItem('darkMode')){
+        if(localStorage.getItem('darkMode') == 'on'){
+            document.getElementById("btn").click();
+            localStorage.setItem('darkMode', "on");
+            body.classList.add('dark');
+            body.classList.remove('light');
+            document.getElementById("btn").innerHTML= "Dark mode";
+            document.documentElement.style.setProperty('--background', 'url("background3.png")');
+            document.documentElement.style.setProperty('--color', '#5e5d61');
+        }
+        else{
+            body.classList.add('light');
+            body.classList.remove('dark');
+            document.getElementById("btn").innerHTML = "Light mode";
+            document.documentElement.style.setProperty('--background', 'url("background2.png")');
+            document.documentElement.style.setProperty('--color', '#8e63df');
+        }   
+    }
+    else{
+        localStorage.setItem('darkMode', "off");
     }
 }
 

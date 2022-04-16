@@ -1,5 +1,5 @@
 body{
-    background-image: url("background2.png");
+    background-image: var(--background);
 }
 
 
@@ -26,7 +26,7 @@ h3{
     background-color: rgba(255, 255, 255, 0.3);
 }
 .btn{
-    background-color: #8e63df; /* Green */
+    background-color: var(--color); /* Green */
     border: none;
     color: white;
     padding: 10px 20px;
@@ -49,7 +49,7 @@ h3{
     font-size: 0.9em;
     font-family: sans-serif;
     min-width: 400px;
-    border: 5px solid rgb(116, 71, 187);
+    border: 5px solid var(--color);
     border-radius: 3px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
     background-color: rgba(255, 255, 255, 0.8);
@@ -61,7 +61,7 @@ h3{
 }
 
 .table{
-    background-color: #793eaf;
+    background-color: var(--color);
     color: #ffffff;
     text-align: center;
 }
@@ -83,5 +83,5 @@ td{
 }
 
 .listTransaction tr:last-of-type {
-    border-bottom: 2px solid #6b41b9;
+    border-bottom: 2px solid var(--color);
 }

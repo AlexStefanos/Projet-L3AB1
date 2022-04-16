@@ -18,7 +18,7 @@ body{
 }
 
 .listTransaction tr:last-of-type {
-  border-bottom: 2px solid #6930b4;
+  border-bottom: 2px solid var(--color);
 }
 
 
@@ -28,7 +28,7 @@ body{
   justify-content: space-between;
 }
 .btn{
-  background-color: #8e63df; /* Green */
+  background-color: var(--color); /* Green */
   border: none;
   color: white;
   padding: 10px 20px;
@@ -88,7 +88,7 @@ body{
   font-size: 0.9em;
   font-family: sans-serif;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
-  border: 5px solid rgb(109, 74, 189);
+  border: 5px solid var(--color);
   background:rgba(255, 255, 255);
   padding: 8px;
 }
@@ -98,7 +98,7 @@ body{
   font-family: sans-serif;
   width: 550px;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
-  border: 5px solid rgb(108, 63, 192);
+  border: 5px solid var(--color);
   background:rgba(255, 255, 255);
   padding: 8px;
 }
@@ -117,7 +117,7 @@ body{
 }
 
 .blockTransaction tr:last-of-type {
-    border-bottom: 2px solid #6d3bad;
+    border-bottom: 2px solid var(--color);
 }
 
 .BlockContent{
@@ -134,7 +134,7 @@ body{
 }
 
 .table{
-  background-color: #6a3cb4;
+  background-color: var(--color);
   color: #ffffff;
   text-align: center;
 }
