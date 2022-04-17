@@ -10,6 +10,8 @@ import io
 import plotly.io as pio
 from PIL import Image
 
+from api.stats import NamesPieChains
+
 # Create your views here.
 
 
@@ -50,13 +52,16 @@ def stats_index(request):
     fig = px.pie(df,values=x_data_PieCompanies, names=y_data_PieCompanies)
     plot_PieCompanies = plot(fig,output_type = 'div')
 
-
-
     NamePieDefi = dict['NamePieDefi']
     ValuesPieDefi = dict['ValuesPieDefi']
     fig = px.pie(df,values=ValuesPieDefi, names = NamePieDefi)
     plot_PieDefi = plot(fig,output_type = 'div')
 
-    return render(request, 'stats/stats_index.html', context={'plot_div': plot_div,'plot_DefiTVL' : plot_DefiTVL,'plot_TopWallet' : plot_TopWallet,'plot_PieMc' : plot_PieMc, 'plot_PieCompanies' : plot_PieCompanies,'plot_PieDefi' : plot_PieDefi})
+    NamesPieChains = dict['NamesPieChains']
+    ValuesPieChains = dict['ValuesPieChains']
+    fig = px.pie(df,values=ValuesPieChains, names = NamesPieChains)
+    plot_PieChains = plot(fig,output_type = 'div')
+
+    return render(request, 'stats/stats_index.html', context={'plot_div': plot_div,'plot_DefiTVL' : plot_DefiTVL,'plot_TopWallet' : plot_TopWallet,'plot_PieMc' : plot_PieMc, 'plot_PieCompanies' : plot_PieCompanies,'plot_PieDefi' : plot_PieDefi,'plot_PieChains' : plot_PieChains})
 
 

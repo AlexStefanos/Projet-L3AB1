@@ -231,7 +231,31 @@ def drawDefiPie() :
         tmp+=1
     return[xNom,yTVL]
 
+def drawChainsTvl() :
+    url = "https://api.llama.fi/chains"
+    responseJson = requests.request("GET" , url).json()
 
+
+    futurDessin = []
+    for i in range (len(responseJson)) :
+        futurDessin.append([responseJson[i]['tvl'],responseJson[i]['name']])
+
+    Inverse = sorted(futurDessin,reverse = True)
+    sum = 0
+
+    for i in range(10, len(Inverse[10:len(Inverse)])) :
+        sum += Inverse[i][0]
+    
+    Inverse.append([sum,'others'])
+    values =[]
+    names = []
+    for i in range(0, 10) :
+        values.append(Inverse[i][0])
+        names.append(Inverse[i][1])
+
+    values.append(sum)
+    names.append('Others')
+    return[values,names]
 
 
 client = pymongo.MongoClient("mongodb://localhost:27017/")
@@ -250,9 +274,10 @@ if(col.count() == 0) :
             "y_data_PieMc" : None,
             "x_data_PieCompanies" : None,
             "y_data_PieCompanies" : None,
-            "x_data_PieTvl": None,
-            "y_data_PieTvl": None}
-
+            "NamePieDefi": None,
+            "ValuesPieDefi": None,
+            "ValuesPieChains" : None,
+            "NamesPieChains" : None}
 
     collection = database["DrawChartsCollection"]
     collectionComplete = collection.find()
@@ -279,6 +304,7 @@ if (drawEthChart() != [dict['x_data_EthPrice'],dict['y_data_EthPrice']]) :
     (x_data_PieMC,y_data_PieMc) = drawPieTopCrypto()
     (x_data_PieCompanies,y_data_PieCompanies) = companiesHoldingInEth()
     (NamePieDefi,ValuesPieDefi) = drawDefiPie()
+    (ValuesPieChains,NamesPieChains) = drawChainsTvl()
     
 
     jsonString = {"x_data_EthPrice" : x_data_EthChart, 
@@ -292,7 +318,9 @@ if (drawEthChart() != [dict['x_data_EthPrice'],dict['y_data_EthPrice']]) :
             "x_data_PieCompanies" : x_data_PieCompanies,
             "y_data_PieCompanies" : y_data_PieCompanies,
             "NamePieDefi" : NamePieDefi,
-            "ValuesPieDefi" : ValuesPieDefi}
+            "ValuesPieDefi" : ValuesPieDefi,
+            "ValuesPieChains" : ValuesPieChains,
+            "NamesPieChains" : NamesPieChains}
 
 
 
