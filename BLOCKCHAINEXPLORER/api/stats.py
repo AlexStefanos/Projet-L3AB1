@@ -143,10 +143,6 @@ def getAllTransactionAdress(Address) :
     AllTransactionsWallet = {"AllTransactions" : tabInfoWallet}
     return (AllTransactionsWallet)
 
-blockNumber = getBlockNumber()
-blockNumberHex = hex(blockNumber)
-
-print("The number of the last block is : " + str(blockNumber))
 
 
 def drawEthChart() :
@@ -305,7 +301,7 @@ x = col.find()
 for data in x:
     dict = data.copy()
 
-"""This if allow to not add all the data in the collection if it's not been 24 hours yet that the collection has been refreshed, because otherwise it's useless"""
+"""This if statement allow to not add all the data in the collection if it's not been 24 hours yet that the collection has been refreshed, because otherwise it's useless"""
 if (drawEthChart() != [dict['x_data_EthPrice'],dict['y_data_EthPrice']]) :
 
     (x_data_EthChart,y_data_EthChart) = drawEthChart()
