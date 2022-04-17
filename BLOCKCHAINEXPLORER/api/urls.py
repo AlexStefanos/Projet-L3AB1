@@ -1,6 +1,6 @@
 from django.urls import path
 from . import views
-
+# Les chemins vers tout les differents endpoints de l API
 urlpatterns = [
     path('getLastBlock',views.getLastBlock),
     path('getInfoBlock/<int:pk>',views.getBlockInfo),

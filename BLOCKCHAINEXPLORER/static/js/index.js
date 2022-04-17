@@ -1,3 +1,4 @@
+// Cette fonction redirige l utilisateur du site web dans ce qu il passe en parametre
 function search(){
     var text = document.getElementById('ser');
     var lg = "".concat(text.value);
@@ -17,6 +18,7 @@ function search(){
     }
 }
 
+// Cette fonction gere le dark mode du site web
 function changeColor(){
     const body = document.body;
     if(body.classList.contains('dark')){
@@ -37,6 +39,7 @@ function changeColor(){
     }
 }
 
+// Cette fontion enregistre les preferences dark mode de l'utilisateur 
 function onLoadChangeColor(){
     const body = document.body;
     if(localStorage.getItem('darkMode')){
@@ -62,18 +65,19 @@ function onLoadChangeColor(){
     }
 }
 
-
+// Redirige chaque transaction vers une page plus detaille sur celle ci
 function link(numberTransac){
     var text = document.getElementById('transaction'.concat(numberTransac)).textContent;
     document.getElementById('transaction'.concat(numberTransac)).setAttribute("href", "tx/".concat(text));
 }
 
+// Redirige chaque block vers une page plus detaille sur celui ci
 function linkBlock(numberBlock){
     var link = document.getElementById('block'.concat(numberBlock)).textContent;
     document.getElementById('block'.concat(numberBlock)).setAttribute("href", "block/".concat(link));
 }
 
-
+// Charge les donnees de la page en faisant appelle au different endpoints de notre API
 function loadPage(){
     var listeArray = [];
     var LastBlock;
@@ -167,6 +171,7 @@ function loadPage(){
         }
     }
 }
+// Cette fonction permet d'actualiser correctement la page 
 async function getRefresh(){
     const api_urlTransac = "http://127.0.0.1:8000/api/Refresh";
     const responseTransac = await fetch(api_urlTransac);

@@ -1,3 +1,4 @@
+// Cette fonction redirige l utilisateur du site web dans ce qu il passe en parametre
 function search(){
     var text = document.getElementById('ser');
     var lg = "".concat(text.value);
@@ -16,6 +17,8 @@ function search(){
         window.location.href = 'http://127.0.0.1:8000/block/'.concat(text.value);
     }
 }
+
+// Cette fonction gere le dark mode du site web
 function changeColor(){
     const body = document.body;
     if(body.classList.contains('dark')){
@@ -36,6 +39,7 @@ function changeColor(){
     }
 }
 
+// Cette fontion enregistre les preferences dark mode de l'utilisateur 
 function onLoadChangeColor(){
     const body = document.body;
     if(localStorage.getItem('darkMode')){
@@ -62,7 +66,7 @@ function onLoadChangeColor(){
 }
 
 
-
+// Charge les donnees de la page en faisant appelle au different endpoints de notre API
 url = window.location.href;
 url = url.slice(25,url.length);
 const request = new XMLHttpRequest();

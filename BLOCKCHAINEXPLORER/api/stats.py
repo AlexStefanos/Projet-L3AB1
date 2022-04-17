@@ -410,7 +410,6 @@ def process_three(blockNumber):
 
 def refresh(): 
     """This fuction permit the refresh of the page, as fast as possible"""
-    start_time = time.time()
     blockNumber = getBlockNumber() 
     t1 = threading.Thread(target=process_one, args=[blockNumber])
     t2 = threading.Thread(target=process_two, args=[blockNumber])
@@ -423,7 +422,6 @@ def refresh():
     t1.join()
     t2.join()
     t3.join()
-    print("--- %s seconds ---" % (time.time() - start_time))
 
 
 
