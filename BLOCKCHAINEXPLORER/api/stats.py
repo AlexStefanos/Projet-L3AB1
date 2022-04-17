@@ -34,6 +34,8 @@ session = requests.Session()
 session.get(url)
 
 def getEthPrice():
+    """Return the actual price of Ethereum
+    """
     apiKey = "11d0e28c6c04190b58fd6abf1f1ad55792e34e93e61c784e5b33c836efb17f1a"
     urlPrix = "https://min-api.cryptocompare.com/data/price?fsym=ETH&tsyms=USD&apikey=" + apiKey
 
@@ -42,6 +44,8 @@ def getEthPrice():
     
 
 def getGasPrice() :
+    """Return the Gas Price on the Ethereum network
+    """
 
     json_data ={"jsonrpc":"2.0","method":"eth_gasPrice","params": [],"id":1}
     resp = session.post(url, headers=headers, json = json_data)
@@ -50,6 +54,8 @@ def getGasPrice() :
     return (result)
     
 def getBlockNumber() :
+    """Return the number of the last block mined on the Ethereum network
+    """
 
     json_data = {"jsonrpc":"2.0","method":"eth_blockNumber","params": [],"id":1}
     resp = session.post(url, headers=headers, json = json_data)
@@ -58,6 +64,8 @@ def getBlockNumber() :
     return (result)
 
 def getBalanceEth(Walletadress) :
+    """Return the Ethereum amount of an address given in parameters
+    """
 
     json_data ={"jsonrpc" : "2.0", "method" : "eth_getBalance", "params" : [ Walletadress , "latest"],"id" : 1}
     resp = session.post(url, headers=headers, json = json_data)
@@ -67,6 +75,8 @@ def getBalanceEth(Walletadress) :
     return (json)
 
 def getBlock(BlockNumber) :
+    """Return all the transactions hash of a bloc given in parameters on the Ethereum blockchain
+    """
     json_data = {"jsonrpc":"2.0","method":"eth_getBlockByNumber","params": [BlockNumber,False],"id":1}
     resp = session.post(url, headers=headers, json = json_data)
     json = resp.json()
@@ -74,6 +84,8 @@ def getBlock(BlockNumber) :
     return (result)
 
 def getBlockBis(BlockNumber) : 
+    """Return all the informations of a block given in parameters to then display it on the website
+    """
     json_data = {"jsonrpc":"2.0","method":"eth_getBlockByNumber","params": [BlockNumber,False],"id":1} 
     resp = session.post(url, headers=headers, json = json_data) 
     json = resp.json()
@@ -82,6 +94,8 @@ def getBlockBis(BlockNumber) :
     return (result) 
 
 def getTransactionCount(blockNumber) :
+    """Return the number of transactions in a block given in parameters on the Ethereum blockchain
+    """
     json_data = {"jsonrpc":"2.0","method":"eth_getBlockTransactionCountByNumber","params": [blockNumber],"id":1}
     resp = session.post(url, headers=headers, json = json_data)
     json = resp.json()
@@ -89,6 +103,8 @@ def getTransactionCount(blockNumber) :
     return (result)
 
 def getTransactionInfo(TransactionHash) :
+    """Return the Ethereum amount of a transaction given in parameters on the Ethereum blockchain
+    """
     url = "https://api.zmok.io/mainnet/lcf0jmfdvhdi3ezt"
     json_data = {"jsonrpc":"2.0","method":"eth_getTransactionByHash","params": [TransactionHash],"id":1}
     resp = session.post(url, headers=headers, json = json_data)
@@ -97,6 +113,8 @@ def getTransactionInfo(TransactionHash) :
     return valueInEth
 
 def getTransactionFromTo(TransactionHash) :
+    """Return the sender and the receiver of a transaction given in parameters on the Ethereum blockchain
+    """
     json_data = {"jsonrpc":"2.0","method":"eth_getTransactionByHash","params": [TransactionHash],"id":1}
     resp = session.post(url, headers=headers, json = json_data)
     json = resp.json()
@@ -108,11 +126,15 @@ def getTransactionFromTo(TransactionHash) :
     return (FromTo)
 
 def getPriceEth() :
+    """Return the actual Ethereum price
+    """
     responsePrix = requests.post(urlPrix).json()
     return responsePrix
 
-def getAllTransactionAdress(Adress) :
-    urlInfo = "https://api.etherscan.io/api?module=account&action=txlist&address=" + Adress + "&startblock=0&endblock=99999999&page=1&offset=1000&sort=asc&apikey=" + apiKeyEthScan
+def getAllTransactionAdress(Address) :
+    """Return the last 1000 transactions of an address given in parameters on the Ethereum blockchain
+    """
+    urlInfo = "https://api.etherscan.io/api?module=account&action=txlist&address=" + Address + "&startblock=0&endblock=99999999&page=1&offset=1000&sort=asc&apikey=" + apiKeyEthScan
     responseInfo = requests.post(urlInfo).json()
     tabInfoWallet = []
     tailleTableau = len(responseInfo['result'])
@@ -128,6 +150,8 @@ print("The number of the last block is : " + str(blockNumber))
 
 
 def drawEthChart() :
+    """Return the data to draw a chart of the price of Ethereum on the last 365 days
+    """
     responseHisto = requests.post(urlHisto).json()
     x = []
     y = []
@@ -139,6 +163,8 @@ def drawEthChart() :
 
 
 def drawTopAdressChart() :
+    """Return the data to draw an histogram of the top 10 richest address in term of Ethereum of all the network
+    """
     data = {'code': 1, 'msg': '成功', 'data': [{'addr': '0x00000000219ab540356cbb839cbe05303d7705fa', 'balance': 11352626.000069, 'txCnt': 34838}, {'addr': '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2', 'balance': 6340481.331016232, 'txCnt': 3973918}, {'addr': '0xda9dfa130df4de4673b89022ee50ff26f6ea73cf', 'balance': 2113030.0012, 'txCnt': 64}, {'addr': '0xbe0eb53f46cd790cd13851d5eff43d12404d33e8', 'balance': 1996008.2837798258, 'txCnt': 1088}, {'addr': '0x73bceb1cd57c711feac4224d062b0f6ff338501e', 'balance': 1923504.538509494, 'txCnt': 480}, {'addr': '0x9bf4001d307dfd62b26a2f1307ee0c0307632d59', 'balance': 1490000.0180927091, 'txCnt': 103}, {'addr': '0x4ddc2d193948926d02f9b1fe9e1daa0718270ed5', 'balance': 1028541.690326043, 'txCnt': 25020}, {'addr': '0x61edcdf5bb737adffe5043706e7c5bb1f1a56eea', 'balance': 929498.95358134, 'txCnt': 336}, {'addr': '0xdc24316b9ae028f1497c275eb9192a3ea0f67022', 'balance': 784665.045977826, 'txCnt': 12732}, {'addr': '0x011b6e24ffb0b5f5fcc564cf4183c5bbbc96d515', 'balance': 593103.3479250012, 'txCnt': 50}]}
     x = []
     y = []
@@ -148,6 +174,7 @@ def drawTopAdressChart() :
     return [x,y]
     
 def drawPieTopCrypto() :
+    """Return the data to draw a pie showing the marketcap repartition """
     url = "https://api.coingecko.com/api/v3/global"
     response = requests.request('GET', url)
     json = response.json()
@@ -163,17 +190,10 @@ def drawPieTopCrypto() :
     tabNomCrypto.append('others')
     return[tabValeur,tabNomCrypto]
 
-def getTransactionsOfAddress(address) : 
-    url = "https://api.etherscan.io/api?module=account&action=txlist&address=" + address + "&startblock=0&endblock=99999999&page=1&offset=15&sort=desc&apikey=" + apiKeyEthScan
-    response = requests.request("GET", url)
-    json = response.json()
-    tabHash = []
-    for i in range(15) :
-        tabHash.append(json["result"][i]["hash"])
-    AllHashTx = {"AllHashTx" : tabHash}
-    return AllHashTx
 
 def companiesHoldingInEth() :
+    """Return the data to draw a pie showing the companies who hold Ethereum in their treasury
+    """
     url = "https://api.coingecko.com/api/v3/companies/public_treasury/ethereum"
     response = requests.request("GET", url)
     Json = response.json()
@@ -187,24 +207,9 @@ def companiesHoldingInEth() :
 
     return[tabValue,tabNamesCompanies]
 
-def drawValueSentUsd() :
-    urlSentValue = "http://www.tokenview.com:8088/chart/eth/daily_sent_value_usd"
-    response = requests.request("GET", urlSentValue)
-    responseJson = response.json()
-    data = responseJson["data"]
-    tabTransactions = []
-    for i in range(len(data)-15,len(data)-1):
-        for cle,valeur in data[i].items() :
-            tabTransactions.append((cle,valeur))
-    x = []
-    y = []
-    for i in range (14) :
-        x.append(tabTransactions[i][0])
-        y.append(tabTransactions[i][1])
-    return[x,y]
-
-
 def drawDefiTvl() :
+    """Return the data to draw a chart representating the evolution of the total value locked in DEFI since the birth of it
+    """
     urlTvlHistoryEth = "https://api.llama.fi/charts/Ethereum"
     response = requests.request("GET", urlTvlHistoryEth)
     responseJson = response.json()
@@ -217,6 +222,8 @@ def drawDefiTvl() :
     return[x,y]
 
 def drawDefiPie() :
+    """Return the data to draw a pie of the biggest protocols on the Ethereum blockchain by total value locked
+    """
     urlProtocols = "https://api.llama.fi/protocols"
     response = requests.request("GET", urlProtocols)
     responseJson = response.json()
@@ -232,6 +239,7 @@ def drawDefiPie() :
     return[xNom,yTVL]
 
 def drawChainsTvl() :
+    """Return the data to draw a pie of the differents total value locked in DEFI between the biggest chains"""
     url = "https://api.llama.fi/chains"
     responseJson = requests.request("GET" , url).json()
 
@@ -262,6 +270,7 @@ client = pymongo.MongoClient("mongodb://localhost:27017/")
 database = client["BlockchainExplorer"]
 col = database["DrawChartsCollection"]
 
+""" If the collection doesn't exist yet, it create it"""
 if(col.count() == 0) :
 
     jsonString = {"x_data_EthPrice" : "T", 
@@ -296,6 +305,7 @@ x = col.find()
 for data in x:
     dict = data.copy()
 
+"""This if allow to not add all the data in the collection if it's not been 24 hours yet that the collection has been refreshed, because otherwise it's useless"""
 if (drawEthChart() != [dict['x_data_EthPrice'],dict['y_data_EthPrice']]) :
 
     (x_data_EthChart,y_data_EthChart) = drawEthChart()
@@ -336,6 +346,7 @@ if (drawEthChart() != [dict['x_data_EthPrice'],dict['y_data_EthPrice']]) :
     else:
         collection.insert_one(file_data)
 
+"""Threading #1"""
 def process_one(blockNumber):
     i = 15
     while(i > 10):
@@ -355,6 +366,7 @@ def process_one(blockNumber):
         blockNumber = blockNumber - 1
         i = i - 1 
 
+"""Threading #2"""
 def process_two(blockNumber):
     i = 10
     blockNumber = blockNumber - 5
@@ -375,6 +387,7 @@ def process_two(blockNumber):
         blockNumber = blockNumber - 1
         i = i - 1 
 
+"""Threading #3"""
 def process_three(blockNumber):
     i = 5
     blockNumber = blockNumber - 10
@@ -396,6 +409,7 @@ def process_three(blockNumber):
         i = i - 1 
 
 def refresh(): 
+    """This fuction permit the refresh of the page, as fast as possible"""
     start_time = time.time()
     blockNumber = getBlockNumber() 
     t1 = threading.Thread(target=process_one, args=[blockNumber])

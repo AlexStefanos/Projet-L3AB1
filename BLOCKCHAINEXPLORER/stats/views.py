@@ -10,15 +10,14 @@ import io
 import plotly.io as pio
 from PIL import Image
 
-from api.stats import NamesPieChains
+
 
 # Create your views here.
 
 
-"""def stats_index(request):
-    return render(request, 'stats/stats_index.html')"""
 
 def stats_index(request):
+    """Return the charts we want to plot in an HTML format so we can display it on the website"""
     df = px.data.tips()
     client = pymongo.MongoClient("mongodb://localhost:27017/")
     db = client["BlockchainExplorer"]
