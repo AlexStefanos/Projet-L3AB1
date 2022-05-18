@@ -226,7 +226,7 @@ def drawDefiPie() :
     tmp = 0
     xNom=[]
     yTVL = []
-    while(tmp<40) :
+    while(tmp<10) :
         while ("Ethereum" not in responseJson[tmp]['chains'] ) :
             tmp+= 1
         xNom.append(responseJson[tmp]['name'])
